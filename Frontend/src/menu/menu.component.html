@@ -1,0 +1,17 @@
+<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" text="Teste">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="goForm('users')">
+    <mat-icon>Usuário</mat-icon>
+    <span>Usuario</span>
+  </button>
+  <button mat-menu-item >
+    <mat-icon>Grupos de Acesso</mat-icon>
+    <span>Grupos</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>Lançamentos</mat-icon>
+    <span>Lançamentos</span>
+  </button>
+</mat-menu>
