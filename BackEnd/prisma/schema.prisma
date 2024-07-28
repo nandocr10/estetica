@@ -34,3 +34,51 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+model Fornecedor {
+  id         Int      @id @default(autoincrement())
+  CnpjFor    String   @unique    // CHAR(14)
+  NmFor      String?             // VARCHAR(100)
+  FoneFor    String?             // CHAR(11)
+  EmailFor   String?             // CHAR(50)
+  DtCad      DateTime? // DATE
+
+  // Relacionamentos
+  Produtos   Produto[]
+}
+
+model Lancamento {
+  id         Int      @id @default(autoincrement())
+  Usuario_id Int
+  Produto_id Int
+  StaLanc    String?  // CHAR
+  DtLan      DateTime? // DATETIME
+  NF         String?   // CHAR(50)
+  NumDoc     Int?     // INTEGER UNSIGNED
+  TpLanc     String?  // CHAR
+  QtdLanc    Float?   // NUMERIC(10) - Prisma usa Float para números decimais
+  VrUnit     Float?   // NUMERIC(12,2)
+  ObsLanc    String?  // VARCHAR(150)
+
+  // Relacionamentos
+  Produto    Produto @relation(fields: [Produto_id], references: [id])
+}
+
+model Produto {
+  id              Int      @id @default(autoincrement())
+  Fornecedor_id   Int
+  DsProdt         String?          // VARCHAR(100)
+  NmAbr           String?          // CHAR(40)
+  DtCad           DateTime? // DATE
+  UnMedida        String?           // CHAR(3)
+  TpCateg         String?  // CHAR
+  QtdEstoq        Float?   // NUMERIC(10)
+  DtUltComp       DateTime? // DATE
+  VrUltComp       Float?   // NUMERIC(12,2)
+  DtPenultComp    DateTime? // DATE
+  VrPenultComp    Float?   // NUMERIC(12,2)
+
+  // Relacionamentos
+  Fornecedor      Fornecedor @relation(fields: [Fornecedor_id], references: [id])
+  Lancamentos     Lancamento[]
+}
+
