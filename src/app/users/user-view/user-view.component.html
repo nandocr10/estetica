@@ -1,0 +1,27 @@
+<div class="user-view-container">
+    <h2>Lista de Usuários</h2>
+    <input type="text" placeholder="Pesquisar usuários..." [(ngModel)]="searchTerm" (input)="filterUsers()" class="search-input">
+    
+    <button (click)="createUser()" class="btn btn-primary">Adicionar Usuário</button>
+  
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers">
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <button (click)="editUser(user.id)" class="btn btn-secondary">Editar</button>
+            <button (click)="deleteUser(user.id)" class="btn btn-danger">Deletar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
