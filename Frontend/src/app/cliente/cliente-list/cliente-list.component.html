@@ -1,0 +1,69 @@
+<div class="container">
+  <h2>Clientes</h2>
+
+  <form (ngSubmit)="onSubmit(clienteForm)" #clienteForm="ngForm">
+    <div class="form-group">
+      <label for="NmCli">Nome:</label>
+      <input type="text" id="NmCli" [(ngModel)]="cliente.NmCli" name="NmCli" required>
+    </div>
+    <div class="form-group">
+      <label for="CpfCli">CPF:</label>
+      <input type="text" id="CpfCli" [(ngModel)]="cliente.CpfCli" name="CpfCli" maxlength="11" required>
+    </div>
+    <div class="form-group">
+      <label for="FoneCli">Telefone:</label>
+      <input type="text" id="FoneCli" [(ngModel)]="cliente.FoneCli" name="FoneCli" required>
+    </div>
+    <div class="form-group">
+      <label for="EmailCli">Email:</label>
+      <input type="email" id="EmailCli" [(ngModel)]="cliente.EmailCli" name="EmailCli" required>
+    </div>
+    <div class="form-group">
+      <label for="EndCli">Endereço:</label>
+      <input type="text" id="EndCli" [(ngModel)]="cliente.EndCli" name="EndCli">
+    </div>
+    <div class="form-group">
+      <label for="CepCli">CEP:</label>
+      <input type="text" id="CepCli" [(ngModel)]="cliente.CepCli" name="CepCli">
+    </div>
+    <div class="form-group">
+      <label for="ComplCli">Complemento:</label>
+      <input type="text" id="ComplCli" [(ngModel)]="cliente.ComplCli" name="ComplCli">
+    </div>
+    <div class="form-group">
+      <label for="redesocial">Rede Social:</label>
+      <input type="text" id="redesocial" [(ngModel)]="cliente.redesocial" name="redesocial">
+    </div>
+    <button type="submit">Salvar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Telefone</th>
+        <th>Email</th>
+        <th>Rede Social</th>
+        <th>Data da Última Compra</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of clientes">
+        <td>{{ c.Codcli }}</td>
+        <td>{{ c.NmCli }}</td>
+        <td>{{ c.CpfCli }}</td>
+        <td>{{ c.FoneCli }}</td>
+        <td>{{ c.EmailCli }}</td>
+        <td>{{ c.redesocial }}</td>
+        <td>{{ c.DtUltCompra | date }}</td>
+        <td>
+          <button (click)="editCliente(c.Codcli)">Editar</button>
+          <button (click)="deleteCliente(c.Codcli)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

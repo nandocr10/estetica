@@ -1,8 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client-js"
@@ -82,3 +78,80 @@ model Produto {
   Lancamentos     Lancamento[]
 }
 
+model Cliente {
+  Codcli       Int       @id @default(autoincrement())
+  NmCli        String?   @db.VarChar(150)
+  CpfCli       String?   @db.Char(11)
+  FoneCli      String?   @db.Char(11)
+  EmailCli     String?   @db.VarChar(50)
+  EndCli       String?   @db.VarChar(150)
+  CepCli       String?   @db.Char(9)
+  ComplCli     String?   @db.VarChar(50)
+  redesocial   String?   @db.VarChar(50)
+  DtUltCompra  DateTime? @db.Date
+
+  atendimentos Atendimento[]
+}
+
+model Servico {
+  CodServ Int      @id @default(autoincrement())
+  DsServ  String?  @db.VarChar(100)
+  DtCad   DateTime? @db.Date
+
+  atendServ AtendServ[]
+}
+
+model Atendimento {
+  CodAtend   Int          @id @default(autoincrement())
+  Codcli     Int
+  DtAgen     DateTime?    @db.Date
+  DtCad      DateTime?    @db.Date
+  DtVenda    DateTime?    @db.Date
+  Obs        String?      @db.VarChar(100)
+  cliente    Cliente      @relation(fields: [Codcli], references: [Codcli])
+  staatend   Int?
+  
+  atendServ  AtendServ[]  // Relacionamento com AtendServ
+
+  @@index([Codcli], name: "Atendimento_FKIndex1")
+}
+
+model Profissional {
+  CodProf    Int      @id @default(autoincrement())
+  NmProf     String?  @db.VarChar(100)
+  CpfProf    String?  @db.Char(11)
+  DtCad      DateTime? @db.Date
+  DocReg     String?  @db.VarChar(50)
+  FoneProf   String?  @db.Char(11)
+  EmailProf  String?  @db.VarChar(50)
+  AtivProfi  String?  @db.VarChar(100)
+
+  atendServ AtendServ[]
+}
+
+model AtendServ {
+  CodAtend    Int      // Parte da chave primária
+  CodServ     Int      // Parte da chave primária
+  CodProf     Int?     // Campo opcional
+  DtAgen      DateTime? // Campo opcional
+  FtEnt01 String?  @db.MediumText // Use MediumText para até 16 MB
+  FtEnt02     String?  @db.MediumText // Use MediumText para até 16 MB
+  FtRet01     String?  @db.MediumText // Use MediumText para até 16 MB
+  FtRet02     String?  @db.MediumText // Use MediumText para até 16 MB
+  VrServ      Decimal? // Campo opcional
+  PercComis   Decimal? // Campo opcional
+  Obs         String?  // Campo opcional
+  tppgto      Int?    // Campo opcional
+  stapgto     Int?   // Campo opcional
+
+
+  atendimento Atendimento @relation(fields: [CodAtend], references: [CodAtend])
+  servico     Servico     @relation(fields: [CodServ], references: [CodServ])
+  profissional Profissional? @relation(fields: [CodProf], references: [CodProf])
+
+  // Definição da chave primária composta
+  @@id([CodAtend, CodServ]) // Define a chave primária composta
+  @@index([CodAtend], name: "Atendimento_has_Servico_FKIndex1")
+  @@index([CodServ], name: "Atendimento_has_Servico_FKIndex2")
+  @@index([CodProf], name: "AtendServ_FKIndex3")
+}

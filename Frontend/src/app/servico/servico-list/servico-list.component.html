@@ -1,0 +1,34 @@
+<div class="container">
+  <h2>Serviços</h2>
+
+  <form (ngSubmit)="onSubmit(servicoForm)" #servicoForm="ngForm">
+    <div class="form-group">
+      <label for="DsServ">Descrição:</label>
+      <input type="text" id="DsServ" [(ngModel)]="servico.DsServ" name="DsServ">
+    </div>
+    
+    <button type="submit">Salvar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Descrição</th>
+        <th>Data de Cadastro</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of servicos">
+        <td>{{ s.CodServ }}</td>
+        <td>{{ s.DsServ }}</td>
+        <td>{{ s.DtCad | date }}</td>
+        <td>
+          <button (click)="editServico(s.CodServ)">Editar</button>
+          <button (click)="deleteServico(s.CodServ)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

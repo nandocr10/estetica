@@ -1,0 +1,51 @@
+<div class="container">
+  <h2>Fornecedores</h2>
+
+  <form (ngSubmit)="onSubmit(fornecedorForm)" #fornecedorForm="ngForm">
+    <div class="form-group">
+      <label for="CnpjFor">CNPJ:</label>
+      <input type="text" id="CnpjFor" [(ngModel)]="fornecedor.CnpjFor" name="CnpjFor" required>
+    </div>
+    <div class="form-group">
+      <label for="NmFor">Nome:</label>
+      <input type="text" id="NmFor" [(ngModel)]="fornecedor.NmFor" name="NmFor" required>
+    </div>
+    <div class="form-group">
+      <label for="FoneFor">Telefone:</label>
+      <input type="text" id="FoneFor" [(ngModel)]="fornecedor.FoneFor" name="FoneFor" required>
+    </div>
+    <div class="form-group">
+      <label for="EmailFor">Email:</label>
+      <input type="email" id="EmailFor" [(ngModel)]="fornecedor.EmailFor" name="EmailFor" required>
+    </div>
+    <button type="submit">Salvar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>CNPJ</th>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>Email</th>
+        <th>Data de Cadastro</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let f of fornecedores">
+        <td>{{ f.id }}</td>
+        <td>{{ f.CnpjFor }}</td>
+        <td>{{ f.NmFor }}</td>
+        <td>{{ f.FoneFor }}</td>
+        <td>{{ f.EmailFor }}</td>
+        <td>{{ f.DtCad | date }}</td>
+        <td>
+          <button (click)="editFornecedor(f.id)">Editar</button>
+          <button (click)="deleteFornecedor(f.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

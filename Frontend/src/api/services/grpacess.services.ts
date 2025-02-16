@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient , HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -13,6 +13,7 @@ type PageReturn = {
 export class GrpAcessService {
   private readonly PATH: string = '/grpacess';
 
+  
   constructor(private http: HttpClient) {}
 
   getUnityPage(
@@ -29,7 +30,11 @@ export class GrpAcessService {
     );
   }
   getUnityById(codgrp: number): Observable<GrpAcess> {
-    return this.http.get<GrpAcess>(environment.baseUrl + this.PATH + `/${codgrp}`);
+    const token = localStorage.getItem('token'); // Supondo que você armazene o token no localStorage
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<GrpAcess>(environment.baseUrl + this.PATH + `/${codgrp}`, { headers });
   }
   insert(grpacess: GrpAcess): Observable<GrpAcess> {
     return this.http.post<GrpAcess>(environment.baseUrl + this.PATH, grpacess);

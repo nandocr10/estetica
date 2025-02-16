@@ -129,15 +129,5 @@ async function login(req, res) {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
-async function authenticateToken (req, res,next) {
-    const token = req.headers['authorization'];
-    if (!token) return res.sendStatus(401);
 
-    jwt.verify(token, 'your_jwt_secret', (err, user) => {
-        if (err) return res.sendStatus(403);
-        req.user = user;
-        next();
-    });
-};
-
-module.exports = { getAll, getById, create, update, deleteEntity, login, authenticateToken }
+module.exports = { getAll, getById, create, update, deleteEntity, login }

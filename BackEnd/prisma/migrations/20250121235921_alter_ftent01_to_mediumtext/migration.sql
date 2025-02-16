@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `atendserv` MODIFY `FtEnt01` MEDIUMTEXT NOT NULL;

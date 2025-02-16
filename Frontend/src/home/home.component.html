@@ -1,12 +1,13 @@
 <menu-root></menu-root>
 <div class="home-container">
   <header>
-    <nav>
-      <h1>Estética Avançada</h1>
-      <ul>
+    <nav class="navbar">
+      <h1 class="logo">Estética Avançada</h1>
+      <ul class="nav-links">
         <li><a routerLink="/home">Home</a></li>
         <li><a routerLink="../users/create">Cadastrar Usuário</a></li>
         <li><a routerLink="../users/view">Ver Usuários</a></li>
+        <li><a routerLink="../fornecedores">Ver Fornecedores</a></li>
         <li><button class="btn-logout" (click)="logout()">Logout</button></li>
       </ul>
     </nav>

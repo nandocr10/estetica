@@ -1,0 +1,253 @@
+<div class="container py-5">
+  <!-- Título Principal -->
+  <h2 class="text-center text-primary mb-4">Atendimentos de Serviço</h2>
+
+  <!-- Formulário de Atendimento -->
+  <form
+    #atendimentoForm="ngForm"
+    (ngSubmit)="onSubmit(atendimentoForm)"
+    class="card shadow p-4 mb-5"
+  >
+  
+    <!-- Código do Atendimento -->
+    <div class="form-group">
+      <label for="CodAtend" class="font-weight-bold">Atendimento:</label>
+      <input
+        type="text"
+        class="form-control destaque-campo"
+        [(ngModel)]="codAtend"
+        name="CodAtend"
+        readonly
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="NomeCliente" class="font-weight-bold">Nome do Cliente:</label>
+      <input
+        type="text"
+        class="form-control destaque-campo"
+        [value]="getNomeCliente(codAtend)"
+        name="NomeCliente"
+        readonly
+        required
+      />
+    </div>
+
+    <!-- Serviço -->
+    <div class="form-group">
+      <label for="CodServ" class="font-weight-bold">Serviço:</label>
+      <select
+        class="form-control"
+        [(ngModel)]="atendimento.CodServ"
+        name="CodServ"
+        required
+      >
+        <option value="" disabled>Selecione um serviço</option>
+        <option
+          *ngFor="let servico of servicos"
+          [value]="servico.CodServ"
+        >
+          {{ servico.DsServ }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Profissional -->
+    <div class="form-group">
+      <label for="CodProf" class="font-weight-bold">Profissional:</label>
+      <select
+        class="form-control"
+        [(ngModel)]="atendimento.CodProf"
+        name="CodProf"
+      >
+        <option value="" disabled>Selecione um profissional</option>
+        <option
+          *ngFor="let profissional of profissionais"
+          [value]="profissional.CodProf"
+        >
+          {{ profissional.NmProf }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Data e Hora -->
+    <div class="form-group">
+      <label for="DtAgen" class="font-weight-bold">Data e Hora de Agendamento:</label>
+      <input 
+        type="datetime-local" 
+        class="form-control" 
+        [(ngModel)]="atendimento.DtAgen" 
+        name="DtAgen" 
+        required 
+        step="900"
+      />
+      <!-- Incremento de 15 minutos -->
+    </div>
+
+   <!-- Upload de Imagens -->
+   <div class="row">
+    <!-- Foto 1 -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="FtEnt01" class="font-weight-bold">Foto 01:</label>
+        <ng-container *ngIf="atendimento?.FtEnt01; else uploadTemplate">
+          <img [src]="atendimento.FtEnt01" alt="Imagem de Entrada 01" class="img-thumbnail" style="max-width: 300px; height: 200px;" />
+        </ng-container>
+        <ng-template #uploadTemplate>
+          <app-image-upload (imageSelected)="atendimento.FtEnt01 = $event"></app-image-upload>
+        </ng-template>
+      </div>
+    </div>
+  
+    <!-- Foto 2 -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="FtEnt02" class="font-weight-bold">Foto 02:</label>
+        <ng-container *ngIf="atendimento?.FtEnt02; else uploadTemplate2">
+          <img [src]="atendimento.FtEnt02" alt="Imagem de Entrada 02" class="img-thumbnail" style="max-width: 200px; height: 200px;" />
+        </ng-container>
+        <ng-template #uploadTemplate2>
+          <app-image-upload (imageSelected)="atendimento.FtEnt02 = $event"></app-image-upload>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  
+<!-- Foto 3 -->
+<div class="col-md-6">
+  <div class="form-group">
+    <label for="FtRet01" class="font-weight-bold">Foto 03:</label>
+    <ng-container *ngIf="atendimento?.FtRet01; else uploadTemplate3">
+      <img [src]="atendimento.FtRet01" alt="Imagem de Retorno 01" class="img-thumbnail" style="max-width: 300px; height: 200px;" />
+    </ng-container>
+    <ng-template #uploadTemplate3>
+      <app-image-upload (imageSelected)="atendimento.FtRet01 = $event"></app-image-upload>
+    </ng-template>
+  </div>
+</div>
+
+<!-- Foto 4 -->
+<div class="col-md-6">
+  <div class="form-group">
+    <label for="FtRet02" class="font-weight-bold">Foto 04:</label>
+    <ng-container *ngIf="atendimento?.FtRet02; else uploadTemplate4">
+      <img [src]="atendimento.FtRet02" alt="Imagem de Retorno 02" class="img-thumbnail" style="max-width: 300px; height: 200px;" />
+    </ng-container>
+    <ng-template #uploadTemplate4>
+      <app-image-upload (imageSelected)="atendimento.FtRet02 = $event"></app-image-upload>
+    </ng-template>
+  </div>
+</div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="VrServ" class="font-weight-bold">Valor do Serviço (R$):</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="atendimento.VrServ"
+            name="VrServ"
+            min="0"
+            step="0.01"
+            placeholder="0.00"
+            required
+          />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="PercComis" class="font-weight-bold">Comissão (%):</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="atendimento.PercComis"
+            name="PercComis"
+            min="0"
+            max="100"
+            step="0.01"
+            placeholder="0.00"
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Observações -->
+    <div class="form-group">
+      <label for="Obs">Observações:</label>
+      <textarea
+        [(ngModel)]="atendimento.Obs"
+        name="Obs"
+        rows="3"
+        class="form-control obs-curta"
+      ></textarea>
+    </div>
+
+    <!-- Botão de Envio -->
+    <button
+      type="submit"
+      class="btn btn-success btn-block"
+      [disabled]="atendimentoForm.invalid"
+    >
+      {{ isEditing ? 'Atualizar' : 'Adicionar' }}
+    </button>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <button class="btn btn-secondary" (click)="voltar()">
+        Voltar
+      </button>
+    </div>
+
+    <!-- Mensagens -->
+    <div *ngIf="successMessage" class="alert alert-success mt-3">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+      {{ errorMessage }}
+    </div>
+  </form>
+
+    <!-- Lista de Atendimentos -->
+<h3 class="text-center text-secondary mt-4">Lista de Atendimentos</h3>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover mt-3">
+    <thead class="thead-dark">
+      <tr>
+        <th>Código do Atendimento</th>
+        <th>Serviço</th>
+        <th class="col-data-hora">Data e Hora</th>
+        <th>Profissional</th>
+        <th>Valor (R$)</th>
+        <th>Comissão (%)</th>
+        <th class="observacao-coluna">Observações</th> <!-- Classe para Observações -->
+        <th class="text-center">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let atendimento of atendServs">
+        <td>{{ atendimento.CodAtend }}</td>
+        <td>{{ getServicoNome(atendimento.CodServ) }}</td>
+        <td class="observacao-coluna">{{ atendimento.DtAgen | date: 'dd-MM-yyyy HH:mm' }}</td>
+        <td>{{ getNomeProfissional(atendimento.CodProf) }}</td>
+        <td>{{ atendimento.VrServ | number: '1.2-2' }}</td>
+        <td>{{ atendimento.PercComis | number: '1.2-2' }}</td>
+        <td class="observacao-coluna">{{ atendimento.Obs }}</td> <!-- Classe para Observações -->
+        <td class="text-center">
+          <button
+            class="btn btn-warning btn-sm mr-2"
+            (click)="editAtendServ(atendimento.CodAtend, atendimento.CodServ)"
+          >
+            Editar
+          </button>
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="deleteAtendServ(atendimento.CodAtend, atendimento.CodServ)"
+          >
+            Excluir
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

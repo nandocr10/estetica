@@ -1,17 +1,51 @@
 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" text="Teste">
   <mat-icon>more_vert</mat-icon>
 </button>
+
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="goForm('users')">
-    <mat-icon>Usuário</mat-icon>
-    <span>Usuario</span>
-  </button>
-  <button mat-menu-item >
-    <mat-icon>Grupos de Acesso</mat-icon>
-    <span>Grupos</span>
+    <mat-icon>person</mat-icon>
+    <span>Usuário</span>
   </button>
   <button mat-menu-item>
-    <mat-icon>Lançamentos</mat-icon>
+    <mat-icon>group</mat-icon>
+    <span>Grupos de Acesso</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>assignment</mat-icon>
     <span>Lançamentos</span>
   </button>
-</mat-menu>
+
+  <!-- Fornecedor List -->
+  <button mat-menu-item (click)="goForm('fornecedor')">
+    <mat-icon>list</mat-icon>
+    <span>Fornecedor List</span>
+  </button>
+
+ 
+  <!-- Cliente List -->
+  <button mat-menu-item (click)="goForm('cliente')">
+    <mat-icon>list</mat-icon>
+    <span>Cliente List</span>
+  </button>
+
+  <!-- Serviço List -->
+  <button mat-menu-item (click)="goForm('servico')">
+    <mat-icon>list</mat-icon>
+    <span>Serviço List</span>
+  </button>
+
+  <!-- Atendimento List -->
+  <button mat-menu-item (click)="goForm('atendimento')">
+    <mat-icon>list</mat-icon>
+    <span>Atendimento List</span>
+  </button>
+
+
+  <!-- Profissional List -->
+  <button mat-menu-item (click)="goForm('profissional')">
+    <mat-icon>list</mat-icon>
+    <span>Profissional List</span>
+  </button>
+
+

@@ -1,0 +1,27 @@
+<div class="container">
+  <h2>Atendimento</h2>
+
+  <form (ngSubmit)="saveAtendimento()">
+    <div class="form-group">
+      <label for="Codcli">Código do Cliente:</label>
+      <input type="number" id="Codcli" [(ngModel)]="atendimento.Codcli" name="Codcli" required>
+    </div>
+
+    <div class="form-group">
+      <label for="DtAgen">Data de Agendamento:</label>
+      <input type="date" id="DtAgen" [(ngModel)]="atendimento.DtAgen" name="DtAgen" required>
+    </div>
+
+    <div class="form-group">
+      <label for="DtVenda">Data da Venda:</label>
+      <input type="date" id="DtVenda" [(ngModel)]="atendimento.DtVenda" name="DtVenda">
+    </div>
+
+    <div class="form-group">
+      <label for="Obs">Observações:</label>
+      <textarea id="Obs" [(ngModel)]="atendimento.Obs" name="Obs"></textarea>
+    </div>
+
+    <button type="submit">Salvar</button>
+  </form>
+</div>

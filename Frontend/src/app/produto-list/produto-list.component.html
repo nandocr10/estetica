@@ -1,0 +1,55 @@
+<div class="container">
+  <h2>Produtos</h2>
+
+  <form (ngSubmit)="onSubmit(produtoForm)" #produtoForm="ngForm">
+    <div class="form-group">
+      <label for="DsProdt">Descrição:</label>
+      <input type="text" id="DsProdt" [(ngModel)]="produto.DsProdt" name="DsProdt" required>
+    </div>
+    <div class="form-group">
+      <label for="NmAbr">Nome Abreviado:</label>
+      <input type="text" id="NmAbr" [(ngModel)]="produto.NmAbr" name="NmAbr" required>
+    </div>
+    <div class="form-group">
+      <label for="UnMedida">Unidade de Medida:</label>
+      <input type="text" id="UnMedida" [(ngModel)]="produto.UnMedida" name="UnMedida" required>
+    </div>
+    <div class="form-group">
+      <label for="TpCateg">Categoria:</label>
+      <input type="text" id="TpCateg" [(ngModel)]="produto.TpCateg" name="TpCateg" required>
+    </div>
+    <div class="form-group">
+      <label for="QtdEstoq">Quantidade em Estoque:</label>
+      <input type="number" id="QtdEstoq" [(ngModel)]="produto.QtdEstoq" name="QtdEstoq" required>
+    </div>
+    <button type="submit">Salvar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Descrição</th>
+        <th>Nome Abreviado</th>
+        <th>Unidade de Medida</th>
+        <th>Categoria</th>
+        <th>Quantidade em Estoque</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of produtos">
+        <td>{{ p.id }}</td>
+        <td>{{ p.DsProdt }}</td>
+        <td>{{ p.NmAbr }}</td>
+        <td>{{ p.UnMedida }}</td>
+        <td>{{ p.TpCateg }}</td>
+        <td>{{ p.QtdEstoq }}</td>
+        <td>
+          <button (click)="editProduto(p.id)">Editar</button>
+          <button (click)="deleteProduto(p.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

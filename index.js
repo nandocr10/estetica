@@ -11,6 +11,7 @@ const activity = require('./src/routes/activity')
 const user = require('./src/routes/user')
 const grpacess = require('./src/routes/grpacess')
 const grupo = require('./src/routes/grupo')
+const produtos = require('./src/routes/produtos')
 
 app.use(cors());
 app.use(helmet());
@@ -22,6 +23,7 @@ app.use('/activity', activity)
 app.use('/user', user)
 app.use('/grpacess', grpacess)
 app.use('/grupo', grupo)
+app.use('/produtos', produtos)
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile))
 
 const authenticateToken = (req, res, next) => {

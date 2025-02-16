@@ -1,0 +1,117 @@
+<div class="container">
+  <h2>Profissionais</h2>
+
+  <form #profissionalForm="ngForm" (ngSubmit)="onSubmit(profissionalForm)" class="mb-4">
+    <div class="form-group">
+      <label for="NmProf">Nome do Profissional:</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="profissional.NmProf"
+        name="NmProf"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="CpfProf">CPF do Profissional:</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="profissional.CpfProf"
+        name="CpfProf"
+        required
+        mask="000.000.000-00"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="DocReg">Documento de Registro:</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="profissional.DocReg"
+        name="DocReg"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="FoneProf">Telefone:</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="profissional.FoneProf"
+        name="FoneProf"
+        required
+        mask="(00) 00000-0000"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="EmailProf">E-mail:</label>
+      <input
+        type="email"
+        class="form-control"
+        [(ngModel)]="profissional.EmailProf"
+        name="EmailProf"
+        required
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="AtivProfi">Atividade Profissional:</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="profissional.AtivProfi"
+        name="AtivProfi"
+        required
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="profissionalForm.invalid">
+      {{ isEditing ? 'Atualizar' : 'Adicionar' }} Profissional
+    </button>
+
+    <div *ngIf="successMessage" class="alert alert-success mt-3">
+      {{ successMessage }}
+    </div>
+  </form>
+
+  <hr />
+
+  <h3>Lista de Profissionais</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th style="width: 150px;">Código do Profissional</th>
+        <th style="width: 300px;">Nome do Profissional</th>
+        <th style="width: 200px;">CPF</th>
+        <th style="width: 300px;">Documento de Registro</th>
+        <th style="width: 200px;">Telefone</th>
+        <th style="width: 300px;">E-mail</th>
+        <th style="width: 300px;">Atividade</th>
+        <th style="width: 100px;">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let profissional of profissionais">
+        <td>{{ profissional.CodProf }}</td>
+        <td>{{ profissional.NmProf }}</td>
+        <td>{{ profissional.CpfProf }}</td>
+        <td>{{ profissional.DocReg }}</td>
+        <td>{{ profissional.FoneProf }}</td>
+        <td>{{ profissional.EmailProf }}</td>
+        <td>{{ profissional.AtivProfi }}</td>
+        <td>
+          <div class="button-group">
+            <button (click)="editProfissional(profissional.CodProf)" class="btn btn-edit">Editar</button>
+            <button (click)="deleteProfissional(profissional.CodProf)" class="btn btn-delete">Excluir</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

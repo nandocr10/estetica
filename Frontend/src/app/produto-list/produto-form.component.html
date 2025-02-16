@@ -1,0 +1,47 @@
+<div class="container">
+  <h2>{{ produto.id ? 'Editar Produto' : 'Novo Produto' }}</h2>
+
+  <form (ngSubmit)="onSubmit(produtoForm)" #produtoForm="ngForm">
+    <div class="form-group">
+      <label for="Fornecedor_id">Fornecedor ID:</label>
+      <input type="number" id="Fornecedor_id" [(ngModel)]="produto.Fornecedor_id" name="Fornecedor_id" required>
+    </div>
+    <div class="form-group">
+      <label for="DsProdt">Descrição do Produto:</label>
+      <input type="text" id="DsProdt" [(ngModel)]="produto.DsProdt" name="DsProdt" required>
+    </div>
+    <div class="form-group">
+      <label for="NmAbr">Nome Abreviado:</label>
+      <input type="text" id="NmAbr" [(ngModel)]="produto.NmAbr" name="NmAbr">
+    </div>
+    <div class="form-group">
+      <label for="UnMedida">Unidade de Medida:</label>
+      <input type="text" id="UnMedida" [(ngModel)]="produto.UnMedida" name="UnMedida" maxlength="3">
+    </div>
+    <div class="form-group">
+      <label for="TpCateg">Tipo de Categoria:</label>
+      <input type="text" id="TpCateg" [(ngModel)]="produto.TpCateg" name="TpCateg">
+    </div>
+    <div class="form-group">
+      <label for="QtdEstoq">Quantidade em Estoque:</label>
+      <input type="number" id="QtdEstoq" [(ngModel)]="produto.QtdEstoq" name="QtdEstoq">
+    </div>
+    <div class="form-group">
+      <label for="DtUltComp">Data da Última Compra:</label>
+      <input type="date" id="DtUltComp" [(ngModel)]="produto.DtUltComp" name="DtUltComp">
+    </div>
+    <div class="form-group">
+      <label for="VrUltComp">Valor da Última Compra:</label>
+      <input type="number" id="VrUltComp" [(ngModel)]="produto.VrUltComp" name="VrUltComp" step="0.01">
+    </div>
+    <div class="form-group">
+      <label for="DtPenultComp">Data da Penúltima Compra:</label>
+      <input type="date" id="DtPenultComp" [(ngModel)]="produto.DtPenultComp" name="DtPenultComp">
+    </div>
+    <div class="form-group">
+      <label for="VrPenultComp">Valor da Penúltima Compra:</label>
+      <input type="number" id="VrPenultComp" [(ngModel)]="produto.VrPenultComp" name="VrPenultComp" step="0.01">
+    </div>
+    <button type="submit">Salvar</button>
+  </form>
+</div>
