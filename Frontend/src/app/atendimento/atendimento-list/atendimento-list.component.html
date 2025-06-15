@@ -31,6 +31,17 @@
       ></textarea>
     </div>
 
+    <!-- 🔹 Novo Campo: Staatend -->
+    <div class="form-group">
+      <label for="Staatend" class="font-weight-bold">Status do Atendimento:</label>
+      <select class="form-control" [(ngModel)]="atendimento.Staatend" name="Staatend" required>
+        <option value="" disabled>Selecione um status</option>
+        <option value="1">Ativo</option>
+        <option value="2">Em Atendimento</option>
+        <option value="3">Encerrado</option>
+      </select>
+    </div>
+
     <button type="submit" class="btn btn-success btn-block mt-3" [disabled]="atendimentoForm.invalid">
       Criar Novo Atendimento
     </button>
@@ -62,6 +73,7 @@
           <th>Código do Cliente</th>
           <th>Data de Agendamento</th>
           <th>Observações</th>
+          <th>Status</th> <!-- Novo campo na tabela -->
           <th class="text-center">Ações</th>
         </tr>
       </thead>
@@ -72,6 +84,7 @@
           <td>{{ atendimento.Codcli }}</td>
           <td>{{ atendimento.DtAgen | date: 'dd-MM-yyyy' }}</td>
           <td>{{ atendimento.Obs }}</td>
+          <td>{{ getStatusText(atendimento.Staatend) }}</td> <!-- Exibir texto do status -->
           <td class="text-center">
             <button class="btn btn-warning btn-sm mr-2" [routerLink]="['/atend-serv', atendimento.CodAtend, atendimento.Codcli]">
               Serviços

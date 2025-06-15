@@ -19,6 +19,7 @@ import { ServicoService } from 'src/api/services/servico.services';
 import { AtendimentoService } from 'src/api/services/atendimento.services'; // Importar AtendimentoService
 import { ProfissionalService } from 'src/api/services/profissional.services';
 import { AtendServService } from 'src/api/services/atendserv.services';
+import { ProdutoService } from 'src/api/services/produtos.services';
 
 import { LoginComponent } from 'src/login/login.component';
 import { HomeComponent } from 'src/home/home.component';
@@ -29,7 +30,6 @@ import { UserViewComponent } from './users/user-view/user-view.component';
 
 import { FornecedorListComponent } from './fornecedor/fornecedor-list/fornecedor-list.component';
 import { FornecedorFormComponent } from './fornecedor/fornecedor-list/fornecedor-form.component';
-import { ProdutoListComponent } from './produto-list/produto-list.component';
 
 import { ClienteListComponent } from './cliente/cliente-list/cliente-list.component';
 import { ClienteFormComponent } from './cliente/cliente-list/cliente-form.component';
@@ -52,6 +52,9 @@ import { PercentageFormatPipe } from './percentage-format.pipe'; // Ajuste o cam
 
 import {ImageUploadComponent} from './image-upload/image-upload.component'; // Ajuste o caminho con
 //import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+
+//import { ProdutosListComponent } from './produtos/';
+import { ProdutoListComponent } from './produtos/produtos-list/produtos-list.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +79,8 @@ import {ImageUploadComponent} from './image-upload/image-upload.component'; // A
     AtendServListComponent,
     CurrencyFormatPipe, // Adicione o pipe aqui
     PercentageFormatPipe, // Adicione o pipe aqui
-    ImageUploadComponent
+    ImageUploadComponent,
+    ProdutoListComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +106,8 @@ import {ImageUploadComponent} from './image-upload/image-upload.component'; // A
     ServicoService,
     AtendimentoService, // Adicionar AtendimentoService aos providers
     ProfissionalService ,
-    AtendServService
+    AtendServService,
+    ProdutoService,
    // provideNgxMask()
   ],
   bootstrap: [AppComponent]

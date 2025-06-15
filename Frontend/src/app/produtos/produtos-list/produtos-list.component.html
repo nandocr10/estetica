@@ -1,0 +1,89 @@
+<div class="container">
+  <h2>Produtos</h2>
+
+  <form (ngSubmit)="onSubmit(produtoForm)" #produtoForm="ngForm">
+    <div class="form-group">
+      <label for="Fornecedor_id">Fornecedor:</label>
+      <select id="Fornecedor_id" [(ngModel)]="produto.Fornecedor_id" name="Fornecedor_id" required>
+        <option *ngFor="let fornecedor of fornecedores" [value]="fornecedor.id">
+          {{ fornecedor.NmFor }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="DsProdt">Descrição:</label>
+      <input type="text" id="DsProdt" [(ngModel)]="produto.DsProdt" name="DsProdt" required>
+    </div>
+    <div class="form-group">
+      <label for="NmAbr">Nome Abreviado:</label>
+      <input type="text" id="NmAbr" [(ngModel)]="produto.NmAbr" name="NmAbr" required>
+    </div>
+    <div class="form-group">
+      <label for="UnMedida">Unidade de Medida:</label>
+      <input type="text" id="UnMedida" [(ngModel)]="produto.UnMedida" name="UnMedida" required>
+    </div>
+    <div class="form-group">
+      <label for="TpCateg">Tipo de Categoria:</label>
+      <input type="text" id="TpCateg" [(ngModel)]="produto.TpCateg" name="TpCateg">
+    </div>
+    <div class="form-group">
+      <label for="QtdEstoq">Quantidade em Estoque:</label>
+      <input type="number" id="QtdEstoq" [(ngModel)]="produto.QtdEstoq" name="QtdEstoq">
+    </div>
+    <div class="form-group">
+      <label for="DtUltComp">Data da Última Compra:</label>
+      <input type="date" id="DtUltComp" [(ngModel)]="produto.DtUltComp" name="DtUltComp">
+    </div>
+    <div class="form-group">
+      <label for="VrUltComp">Valor da Última Compra:</label>
+      <input type="number" step="0.01" id="VrUltComp" [(ngModel)]="produto.VrUltComp" name="VrUltComp">
+    </div>
+    <div class="form-group">
+      <label for="DtPenultComp">Data da Penúltima Compra:</label>
+      <input type="date" id="DtPenultComp" [(ngModel)]="produto.DtPenultComp" name="DtPenultComp">
+    </div>
+    <div class="form-group">
+      <label for="VrPenultComp">Valor da Penúltima Compra:</label>
+      <input type="number" step="0.01" id="VrPenultComp" [(ngModel)]="produto.VrPenultComp" name="VrPenultComp">
+    </div>
+    <div class="form-group">
+      <label for="Dtvenc">Data de Vencimento:</label>
+      <input type="date" id="Dtvenc" [(ngModel)]="produto.Dtvenc" name="Dtvenc">
+    </div>
+    <button type="submit">Salvar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Fornecedor</th>
+        <th>Descrição</th>
+        <th>Nome Abreviado</th>
+        <th>Unidade</th>
+        <th>Estoque</th>
+        <th>Última Compra</th>
+        <th>Valor Última Compra</th>
+        <th>Data de Vencimento</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of produtos">
+        <td>{{ p.id }}</td>
+        <td>{{ getFornecedorNome(p.Fornecedor_id) }}</td>
+        <td>{{ p.DsProdt }}</td>
+        <td>{{ p.NmAbr }}</td>
+        <td>{{ p.UnMedida }}</td>
+        <td>{{ p.QtdEstoq }}</td>
+        <td>{{ p.DtUltComp | date }}</td>
+        <td>{{ p.VrUltComp | currency }}</td>
+        <td>{{ p.Dtvenc | date }}</td>
+        <td>
+          <button (click)="editProduto(p.id)">Editar</button>
+          <button (click)="deleteProduto(p.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

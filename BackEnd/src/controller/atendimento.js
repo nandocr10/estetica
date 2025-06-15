@@ -93,6 +93,7 @@ async function create(req, res) {
                 DtCad: new Date(),
                 DtVenda: req.body.DtVenda ? new Date(req.body.DtVenda) : null,
                 Obs: req.body.Obs,
+                Staatend: req.body.Staatend,
             }
         });
         res.status(httpStatus.CREATED).json(atendimento);
@@ -113,6 +114,7 @@ async function update(req, res) {
                 DtCad: req.body.DtCad ? new Date(req.body.DtCad) : null,
                 DtVenda: req.body.DtVenda ? new Date(req.body.DtVenda) : null,
                 Obs: req.body.Obs,
+                Staatend: req.body.Staatend,   
             }
         });
         res.status(httpStatus.OK).json(atendimento);

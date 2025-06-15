@@ -1,0 +1,19 @@
+<h2>{{ fornecedor.id ? 'Editar Fornecedor' : 'Novo Fornecedor' }}</h2>
+<form (ngSubmit)="saveFornecedor()">
+  <label for="cnpj">CNPJ:</label>
+  <input id="cnpj" [(ngModel)]="fornecedor.CnpjFor" name="CnpjFor" required />
+
+  <label for="nome">Nome:</label>
+  <input id="nome" [(ngModel)]="fornecedor.NmFor" name="NmFor" />
+
+  <label for="telefone">Telefone:</label>
+  <input id="telefone" [(ngModel)]="fornecedor.FoneFor" name="FoneFor" />
+
+  <label for="email">Email:</label>
+  <input id="email" [(ngModel)]="fornecedor.EmailFor" name="EmailFor" />
+
+  <label for="dtcad">Data de Cadastro:</label>
+  <input id="dtcad" [(ngModel)]="fornecedor.DtCad" name="DtCad" type="date" />
+
+  <button type="submit">Salvar</button>
+</form>

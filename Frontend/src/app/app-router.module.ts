@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ServicoListComponent } from './servico/servico-list/servico-list.component';
 import { ServicoFormComponent } from './servico/servico-list/servico-form.component';
 
+
 import { GrpAcessComponent } from 'src/grpacess/grpacess.component';
 import { GrpacessFormComponent } from 'src/grpacess/grpacessForm/grpacessForm.component';
 import { LoginComponent } from 'src/login/login.component';
@@ -32,6 +33,9 @@ import { ProfissionalFormComponent } from './profissional/profissional-list/prof
 // Importação dos componentes de AtendServ
 import { AtendServListComponent } from './atendserv/atendserv-list/atendserv-list.component';
 import { AtendServFormComponent } from './atendserv/atendserv-list/atendserv-form.component';
+
+import { ProdutoListComponent } from './produtos/produtos-list/produtos-list.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -70,6 +74,12 @@ const routes: Routes = [
   { path: 'profissionais', component: ProfissionalListComponent, canActivate: [AuthGuard] },
   { path: 'profissionais/novo', component: ProfissionalFormComponent, canActivate: [AuthGuard] },
   { path: 'profissionais/:id/editar', component: ProfissionalFormComponent, canActivate: [AuthGuard] },
+
+ // Rotas para Produtos
+ { path: 'produtos', component: ProdutoListComponent, canActivate: [AuthGuard] },
+ { path: 'produtos/novo', component: ProdutoListComponent, canActivate: [AuthGuard] },
+ { path: 'produtos/:id/editar', component: ProdutoListComponent, canActivate: [AuthGuard] },
+
 
   {
     path: 'unidades',

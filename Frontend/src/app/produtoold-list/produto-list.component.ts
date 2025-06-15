@@ -22,6 +22,7 @@ export class ProdutoListComponent implements OnInit {
     VrUltComp: 0,
     DtPenultComp: new Date(),
     VrPenultComp: 0,
+    Dtvenc: new Date(),
   };
   isEditing: boolean = false;
 
@@ -82,6 +83,7 @@ export class ProdutoListComponent implements OnInit {
       VrUltComp: 0,
       DtPenultComp: new Date(),
       VrPenultComp: 0,
+      Dtvenc: new Date(),
     };
     this.isEditing = false;
   }

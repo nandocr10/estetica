@@ -59,7 +59,10 @@ export class AtendServListComponent implements OnInit {
     console.log('Código do Atendimento recebido:', this.codAtend);
     console.log('Código do Cliente recebido:', this.codCli);
     this.clienteService.getClientes();
-
+    this.atendimento.DtAgen = new Date(this.atendimento.DtAgen);
+    //this.atendimento.Dtpgto = new Date(this.atendimento.Dtpgto);
+    //console.log('Data Pgto:',new Date(this.atendimento.Dtpgto));
+    // this.atendimento.Dtpgto = this.formatarData(new Date(this.atendimento.Dtpgto));
     // Carrega os atendimentos de serviço relacionados ao código do atendimento, se existir
     if (this.codAtend) {
       this.loadAtendServsByCodAtend();
@@ -74,7 +77,15 @@ export class AtendServListComponent implements OnInit {
     this.loadProfissionais();
     this.loadAtendimentos();
     this.loadClientes(); // Carrega a lista de clientes
+    this.atendimento.DtAgen = new Date(this.atendimento.DtAgen);
+    this.atendimento.Dtpgto = new Date(this.atendimento.Dtpgto);
         
+  }
+
+  formatarData(data: string): string {
+    if (!data) return '';
+    const dataObj = new Date(data);
+    return dataObj.toISOString().split('T')[0]; // Converte para 'yyyy-MM-dd'
   }
   // Supondo que `atendimento.DtAgen` seja um objeto Date, você pode formatar assim:
 formatDateTime(date: Date): string {
@@ -94,9 +105,10 @@ formatDateTime(date: Date): string {
   loadAtendimentos(): void {
     this.atendimentoService.getAtendimentos().subscribe(
       (data: Atendimento[]) => this.atendimentos = data,
-      (error) => this.handleError('Erro ao carregar atendimentos', error)
+      (error) => this.handleError('Erro ao carregar atendimentos', error)      
     );
-    this.clienteService.getClientes()
+    this.clienteService.getClientes();
+    
   }
 
   loadServicos(): void {
@@ -124,6 +136,7 @@ formatDateTime(date: Date): string {
         this.atendServs = data.filter(atend => atend.CodAtend === this.codAtend);
       },
       (error) => this.handleError('Erro ao carregar atendimentos de serviço', error)
+      
     );
   }
 
@@ -187,7 +200,11 @@ formatDateTime(date: Date): string {
       FtRet02: null,
       VrServ: null,
       PercComis: null,
-      Obs: ''
+      Obs: '',
+      Tppgto: null,
+      Stapgto: null,
+      Percdes: null,
+      Dtpgto: null
     };
   }
 
@@ -303,6 +320,17 @@ formatDateTime(date: Date): string {
       this.atendimento[field] = '';
     }
   }
+  tiposPagamento = [
+    { id: 1, nome: 'Cartão de Crédito' },
+    { id: 2, nome: 'Boleto' },
+    { id: 3, nome: 'Pix' }
+  ];
+
+  statusPagamento = [
+    { id: 1, nome: 'Pago' },
+    { id: 2, nome: 'Pendente' },
+    { id: 3, nome: 'Cancelado' }
+  ];
   
   voltar() {
     this.location.back();

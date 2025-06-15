@@ -40,6 +40,18 @@ export class AtendimentoListComponent implements OnInit {
     this.loadData();
   }
 
+  getStatusText(staatend: any): string {
+    console.log('Estado recebido:', staatend); // Para ver o que está chegando na função
+  
+    const statusMap: { [key: string]: string } = {
+      '1': 'Ativo',
+      '2': 'Em Atendimento',
+      '3': 'Encerrado'
+    };
+  
+    return statusMap[staatend?.toString()] || 'Desconhecido';
+  }
+
   loadData(): void {
     forkJoin([
       this.clienteService.getClientes(),
@@ -102,3 +114,5 @@ export class AtendimentoListComponent implements OnInit {
     }
   }
 }
+
+

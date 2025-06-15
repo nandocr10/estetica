@@ -1,41 +1,48 @@
-<menu-root></menu-root>
-<div class="home-container">
-  <header>
-    <nav class="navbar">
-      <h1 class="logo">Estética Avançada</h1>
-      <ul class="nav-links">
-        <li><a routerLink="/home">Home</a></li>
-        <li><a routerLink="../users/create">Cadastrar Usuário</a></li>
-        <li><a routerLink="../users/view">Ver Usuários</a></li>
-        <li><a routerLink="../fornecedores">Ver Fornecedores</a></li>
-        <li><button class="btn-logout" (click)="logout()">Logout</button></li>
-      </ul>
+<div class="layout">
+  <aside class="sidebar">
+    <img src="assets/LOGOTIPO.png" alt="Logo Belle Clinic" class="logo" />
+    <nav class="nav">
+      <li><a routerLink="/home">Home</a></li>
+      <li><a routerLink="../users/create">Cadastrar Usuário</a></li>
+      <li><a routerLink="../produtos">Ver Produtos</a></li>
+      <li><a routerLink="../users/view">Ver Usuários</a></li>
+      <li><a routerLink="../fornecedores">Ver Fornecedores</a></li>
+      <li><a routerLink="../clientes">Ver Clientes</a></li>
+      <li><a routerLink="../atendimentos">Ver Atendimentos</a></li>
+      <button class="logout-btn" (click)="logout()">🚪 Logout</button>
     </nav>
-  </header>
+  </aside>
 
-  <section class="hero">
-    <div class="hero-text">
-      <h2>Transforme sua Beleza</h2>
-      <p>Procedimentos estéticos avançados para realçar sua beleza natural.</p>
-      <a routerLink="/user-create" class="btn btn-primary">Agende uma Consulta</a>
-    </div>
-  </section>
+  <main class="main">
+    <header class="page-header">
+      <h1>Bem-vinda à Belle Clinic</h1>
+      <p>Estética avançada para realçar sua beleza natural</p>
+    </header>
 
-  <section class="services">
-    <h2>Nossos Serviços</h2>
-    <div class="service-cards">
-      <div class="card">
-        <h3>Botox</h3>
-        <p>Reduza rugas e linhas de expressão.</p>
+    <section class="hero">
+      <div class="hero-text">
+        <h2>Transforme sua Beleza</h2>
+        <p>Experimente o poder da estética moderna com atendimento humanizado.</p>
+        <a routerLink="/user-create" class="btn-primary">Agende sua Consulta</a>
       </div>
-      <div class="card">
-        <h3>Preenchimento Facial</h3>
-        <p>Recupere o volume e a juventude do seu rosto.</p>
+    </section>
+
+    <section class="services">
+      <h3>Nossos Serviços</h3>
+      <div class="service-cards">
+        <div class="card">
+          <h4>💉 Botox</h4>
+          <p>Redução eficaz de rugas e linhas de expressão.</p>
+        </div>
+        <div class="card">
+          <h4>✨ Preenchimento Facial</h4>
+          <p>Volume, simetria e juventude com naturalidade.</p>
+        </div>
+        <div class="card">
+          <h4>🌸 Peeling</h4>
+          <p>Renove sua pele e revele sua melhor versão.</p>
+        </div>
       </div>
-      <div class="card">
-        <h3>Peeling</h3>
-        <p>Renove sua pele e tenha uma aparência mais jovem.</p>
-      </div>
-    </div>
-  </section>
+    </section>
+  </main>
 </div>

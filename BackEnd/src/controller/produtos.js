@@ -1,126 +1,100 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const httpStatus = require('http-status');
 
-// Create Produto
-const createProduto = async (req, res) => {
-  const {
-    Fornecedor_id,
-    DsProdt,
-    NmAbr,
-    DtCad,
-    UnMedida,
-    TpCateg,
-    QtdEstoq,
-    DtUltComp,
-    VrUltComp,
-    DtPenultComp,
-    VrPenultComp
-  } = req.body;
-  try {
-    const produto = await prisma.produto.create({
-      data: {
-        Fornecedor_id,
-        DsProdt,
-        NmAbr,
-        DtCad,
-        UnMedida,
-        TpCateg,
-        QtdEstoq,
-        DtUltComp,
-        VrUltComp,
-        DtPenultComp,
-        VrPenultComp
-      },
-    });
-    res.status(201).json(produto);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// Read All Produtos
-const getProdutos = async (req, res) => {
-  try {
-    const produtos = await prisma.produto.findMany();
-    res.status(200).json(produtos);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// Read One Produto
-const getProdutoById = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const produto = await prisma.produto.findUnique({
-      where: { id: Number(id) }
-    });
-    if (produto) {
-      res.status(200).json(produto);
-    } else {
-      res.status(404).json({ error: 'Produto not found' });
+// Obter todos os produtos
+async function getAll(req, res) {
+    try {
+        const produtos = await prisma.produto.findMany();
+        res.status(httpStatus.OK).json(produtos);
+    } catch (err) {
+        console.error(err);
+        res.status(httpStatus.UNPROCESSABLE_ENTITY).send('Erro na requisição');
     }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+}
 
-// Update Produto
-const updateProduto = async (req, res) => {
-  const { id } = req.params;
-  const {
-    Fornecedor_id,
-    DsProdt,
-    NmAbr,
-    DtCad,
-    UnMedida,
-    TpCateg,
-    QtdEstoq,
-    DtUltComp,
-    VrUltComp,
-    DtPenultComp,
-    VrPenultComp
-  } = req.body;
-  try {
-    const produto = await prisma.produto.update({
-      where: { id: Number(id) },
-      data: {
-        Fornecedor_id,
-        DsProdt,
-        NmAbr,
-        DtCad,
-        UnMedida,
-        TpCateg,
-        QtdEstoq,
-        DtUltComp,
-        VrUltComp,
-        DtPenultComp,
-        VrPenultComp
-      },
-    });
-    res.status(200).json(produto);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+// Obter um produto pelo ID
+async function getById(req, res) {
+    try {
+        const produto = await prisma.produto.findUnique({
+            where: { id: parseInt(req.params.id) },
+        });
+        if (!produto) {
+            return res.status(httpStatus.NOT_FOUND).send('Produto não encontrado');
+        }
+        res.status(httpStatus.OK).json(produto);
+    } catch (err) {
+        console.error(err);
+        res.status(httpStatus.UNPROCESSABLE_ENTITY).send('Erro na requisição');
+    }
+}
 
-// Delete Produto
-const deleteProduto = async (req, res) => {
-  const { id } = req.params;
-  try {
-    await prisma.produto.delete({
-      where: { id: Number(id) }
-    });
-    res.status(204).end();
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+// Criar um novo produto
+async function create(req, res) {
+    try {
+        const produto = await prisma.produto.create({
+            data: {
+                Fornecedor_id: parseInt(req.body.Fornecedor_id),
+                DsProdt: req.body.DsProdt,
+                NmAbr: req.body.NmAbr,
+                DtCad: req.body.DtCad ? new Date(req.body.DtCad) : null,
+                UnMedida: req.body.UnMedida,
+                TpCateg: req.body.TpCateg,
+                QtdEstoq: req.body.QtdEstoq,
+                DtUltComp: req.body.DtUltComp ? new Date(req.body.DtUltComp) : null,
+                VrUltComp: req.body.VrUltComp,
+                DtPenultComp: req.body.DtPenultComp ? new Date(req.body.DtPenultComp) : null,
+                VrPenultComp: req.body.VrPenultComp,
+                DtVenc: req.body.DtVenc ? new Date(req.body.DtVenc) : null,
+                DtVenc: req.body.DtVenc,
+            }
+        });
+        res.status(httpStatus.CREATED).json(produto);
+    } catch (err) {
+        console.error(err);
+        res.status(httpStatus.UNPROCESSABLE_ENTITY).send('Erro na requisição');
+    }
+}
 
-module.exports = {
-  createProduto,
-  getProdutos,
-  getProdutoById,
-  updateProduto,
-  deleteProduto
-};
+// Atualizar um produto existente
+async function update(req, res) {
+    try {
+        const produto = await prisma.produto.update({
+            where: { id: parseInt(req.params.id) },
+            data: {
+                Fornecedor_id: parseInt(req.body.Fornecedor_id),
+                DsProdt: req.body.DsProdt,
+                NmAbr: req.body.NmAbr,
+                DtCad: req.body.DtCad ? new Date(req.body.DtCad) : null,
+                UnMedida: req.body.UnMedida,
+                TpCateg: req.body.TpCateg,
+                QtdEstoq: req.body.QtdEstoq,
+                DtUltComp: req.body.DtUltComp ? new Date(req.body.DtUltComp) : null,
+                VrUltComp: req.body.VrUltComp,
+                DtPenultComp: req.body.DtPenultComp ? new Date(req.body.DtPenultComp) : null,
+                VrPenultComp: req.body.VrPenultComp,
+                DtVenc: req.body.DtVenc ? new Date(req.body.DtVenc) : null,
+                DtVenc: req.body.DtVenc ,
+            }
+        });
+        res.status(httpStatus.OK).json(produto);
+    } catch (err) {
+        console.error(err);
+        res.status(httpStatus.UNPROCESSABLE_ENTITY).send('Erro na requisição');
+    }
+}
+
+// Deletar um produto
+async function deleteEntity(req, res) {
+    try {
+        const produto = await prisma.produto.delete({
+            where: { id: parseInt(req.params.id) }
+        });
+        res.status(httpStatus.OK).json(produto);
+    } catch (err) {
+        console.error(err);
+        res.status(httpStatus.UNPROCESSABLE_ENTITY).send('Erro na remoção');
+    }
+}
+
+module.exports = { getAll, getById, create, update, deleteEntity };

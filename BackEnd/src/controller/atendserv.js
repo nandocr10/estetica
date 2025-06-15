@@ -77,7 +77,11 @@ async function create(req, res) {
             FtRet02,
             VrServ,
             PercComis,
-            Obs
+            Obs,
+            Tppgto,
+            Stapgto,
+            Percdes,
+            Dtpgto 
         } = req.body;
 
         // Compactar os campos de imagem (FtEnt01 e outros, se necessário)
@@ -98,7 +102,11 @@ async function create(req, res) {
                 FtRet02: compactedFtRet02,
                 VrServ: VrServ,
                 PercComis: PercComis,
-                Obs: Obs
+                Obs: Obs,
+                Tppgto: Tppgto ? parseInt(Tppgto) : null,
+                Stapgto: Stapgto ? parseInt(Stapgto) : null,
+                Percdes: Percdes ? parseFloat(Percdes) : null,
+                Dtpgto: Dtpgto ? new Date(Dtpgto) : null
             }
         });
 
@@ -133,7 +141,11 @@ async function update(req, res) {
                 FtRet02: req.body.FtRet02,  
                 VrServ: req.body.VrServ,  
                 PercComis: req.body.PercComis,  
-                Obs: req.body.Obs  
+                Obs: req.body.Obs ,
+                Tppgto: req.body.Tppgto ? parseInt(req.body.Tppgto) : null,
+                Stapgto: req.body.Stapgto ? parseInt(req.body.Stapgto) : null,
+                Percdes: req.body.Percdes ? parseFloat(req.body.Percdes) : null,
+                Dtpgto: req.body.Dtpgto ? new Date(req.body.Dtpgto) : null
             }  
         });  
         res.status(httpStatus.OK).json(atendimento);  

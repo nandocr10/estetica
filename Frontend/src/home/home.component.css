@@ -1,141 +1,145 @@
-/* Estilos Gerais */
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f9f9f9;
   margin: 0;
-  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f4f3;
+  color: #333;
 }
 
-.home-container {
-  width: 100%;
-  padding: 20px;
-  background-color: #fff;
-}
-
-/* Navbar */
-.navbar {
+.layout {
   display: flex;
-  justify-content: space-between;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* MENU LATERAL */
+.sidebar {
+  width: 260px;
+  background-color: #c29597; /* rosa antigo elegante */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  background-color: #f7d1dc; /* Rosa bebê discreto */
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 40px 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.05);
 }
 
 .logo {
-  color: #333;
-  font-size: 24px;
-  font-weight: bold;
+  max-width: 160px;
+  margin-bottom: 50px;
 }
 
-.nav-links {
-  list-style: none;
+.nav {
+  width: 100%;
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.nav-links a {
-  color: #333;
+.nav a,
+.logout-btn {
+  color: #fff;
   text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s;
-}
-
-.nav-links a:hover {
-  color: #d81b60;
-}
-
-.btn-logout {
-  background-color: #d81b60;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.btn-logout:hover {
-  background-color: #c2185b;
-}
-
-/* Hero Section */
-.hero {
-  text-align: center;
-  padding: 50px;
-  background-color: #fde8ef; /* Fundo rosa bebê mais claro */
+  font-size: 16px;
+  padding: 12px 20px;
   border-radius: 8px;
+  transition: background 0.3s;
+  background-color: transparent;
+  text-align: left;
+  border: none;
+}
+
+.nav a:hover,
+.logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.nav .active {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* ÁREA PRINCIPAL */
+.main {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.page-header {
   margin-bottom: 30px;
 }
 
+.page-header h1 {
+  color: #b68b52; /* dourado suave */
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+.page-header p {
+  color: #a77a7a;
+  font-size: 16px;
+}
+
+/* HERO */
+.hero-text {
+  background-color: #fff0f4;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+  margin-bottom: 40px;
+}
+
 .hero-text h2 {
-  color: #d81b60;
-  font-size: 36px;
-  margin-bottom: 15px;
+  font-size: 24px;
+  color: #b68b52;
 }
 
 .hero-text p {
-  color: #555;
-  font-size: 18px;
-  margin-bottom: 20px;
+  margin: 10px 0 20px;
 }
 
 .btn-primary {
-  background-color: #d81b60;
+  background-color: #b68b52;
   color: white;
   padding: 12px 24px;
-  border-radius: 4px;
   text-decoration: none;
-  transition: background-color 0.3s;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
 .btn-primary:hover {
-  background-color: #c2185b;
+  background-color: #a27c45;
 }
 
-/* Serviços */
-.services {
-  text-align: center;
+/* SERVIÇOS */
+.services h3 {
+  font-size: 22px;
+  color: #b68b52;
+  margin-bottom: 20px;
 }
 
 .service-cards {
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
 .card {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 30%;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card h3 {
-  color: #d81b60;
-  font-size: 24px;
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.card h4 {
   margin-bottom: 10px;
-}
-
-.card p {
-  color: #555;
-  font-size: 16px;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-  .service-cards {
-    flex-direction: column;
-  }
-
-  .navbar {
-    flex-direction: column;
-  }
-
-  .nav-links {
-    flex-direction: column;
-    gap: 10px;
-  }
+  color: #c29597;
 }

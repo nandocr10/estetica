@@ -17,6 +17,7 @@ export interface Atendimento {
   DtCad?: Date;  
   DtVenda?: Date;  
   Obs?: string;  
+  Staatend?: number; // Adicionando o campo Estado do Atendimento
 }  
 
 @Injectable({  

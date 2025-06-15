@@ -87,6 +87,9 @@ export class MenuComponent {
       case 'profissional-form': // Adicionado para Profissional Formulário
         this.router.navigate(['/profissionais/novo']);
         break;
+      case 'produtos': // Adicionado para Produtos 
+        this.router.navigate(['/produtos']);
+        break;
       default:
         break;
     }

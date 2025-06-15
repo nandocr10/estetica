@@ -16,13 +16,14 @@ export interface Produto {
   VrUltComp: number;
   DtPenultComp: Date;
   VrPenultComp: number;
+  Dtvenc: Date;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProdutoService {
-  private readonly PATH: string = '/produto';
+  private readonly PATH: string = '/produtos';
 
   constructor(private http: HttpClient) {}
 
@@ -32,8 +33,7 @@ export class ProdutoService {
   }
 
   getProdutoById(id: number): Observable<Produto> {
-    const headers = this.getHeaders();
-    return this.http.get<Produto>(`${environment.baseUrl}${this.PATH}/${id}`, { headers });
+    return this.http.get<Produto>(`${environment.baseUrl}${this.PATH}/${id}`);
   }
 
   create(produto: Produto): Observable<Produto> {

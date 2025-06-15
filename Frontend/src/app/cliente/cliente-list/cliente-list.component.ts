@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ClienteService, Cliente } from 'src/api/services/cliente.services'
+import { ClienteService, Cliente } from 'src/api/services/cliente.services';
 import { NgForm } from '@angular/forms';
+
+// >>> IMPORTANDO AS BIBLIOTECAS
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-cliente-list',
@@ -84,5 +88,33 @@ export class ClienteListComponent implements OnInit {
       DtUltCompra: new Date()
     };
     this.isEditing = false; // Desativa o modo de edição
+  }
+
+  // >>> FUNÇÃO PARA GERAR O RELATÓRIO PDF
+  gerarPDF(): void {
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text('Relatório de Clientes', 14, 22);
+
+    const colunas = ['ID', 'Nome', 'CPF', 'Telefone', 'Email', 'Rede Social', 'Última Compra'];
+
+    const linhas = this.clientes.map(cliente => [
+      cliente.Codcli,
+      cliente.NmCli,
+      cliente.CpfCli,
+      cliente.FoneCli,
+      cliente.EmailCli,
+      cliente.redesocial,
+      cliente.DtUltCompra ? new Date(cliente.DtUltCompra).toLocaleDateString() : ''
+    ]);
+
+    autoTable(doc, {
+      startY: 30,
+      head: [colunas],
+      body: linhas,
+    });
+
+    doc.save('relatorio_clientes.pdf');
   }
 }

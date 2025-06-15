@@ -184,6 +184,48 @@
         class="form-control obs-curta"
       ></textarea>
     </div>
+<!-- Tipo de Pagamento -->
+<div class="form-group">
+  <label for="Tppgto" class="font-weight-bold">Tipo de Pagamento:</label>
+  <select class="form-control" [(ngModel)]="atendimento.Tppgto" name="Tppgto" required>
+    <option value="" disabled>Selecione o tipo de pagamento</option>
+    <option *ngFor="let tipo of tiposPagamento" [value]="tipo.id">
+      {{ tipo.nome }}
+    </option>
+  </select>
+</div>
+
+<!-- Status do Pagamento -->
+<div class="form-group">
+  <label for="Stapgto" class="font-weight-bold">Status do Pagamento:</label>
+  <select class="form-control" [(ngModel)]="atendimento.Stapgto" name="Stapgto">
+    <option value="" disabled>Selecione o status</option>
+    <option *ngFor="let status of statusPagamento" [value]="status.id">
+      {{ status.nome }}
+    </option>
+  </select>
+</div>
+
+<!-- Percentual de Desconto -->
+<div class="form-group">
+  <label for="Percdes" class="font-weight-bold">Percentual de Desconto (%):</label>
+  <input 
+    type="number" 
+    class="form-control" 
+    [(ngModel)]="atendimento.Percdes" 
+    name="Percdes" 
+    min="0" 
+    max="100" 
+    step="0.01" 
+    placeholder="0.00"
+  />
+</div>
+  <!-- Data Pgto -->
+  <div class="form-group">
+    <label for="Dtpgto" class="font-weight-bold">Data de Pgto:</label>
+    <input type="date" class="form-control" [(ngModel)]="atendimento.Dtpgto" name="Dtpgto" required />
+  </div>
+
 
     <!-- Botão de Envio -->
     <button

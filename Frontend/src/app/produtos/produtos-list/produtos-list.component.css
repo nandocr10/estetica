@@ -6,7 +6,6 @@ body {
   padding: 0;
 }
 
-/* Container */
 .container {
   width: 90%;
   max-width: 1200px;
@@ -17,7 +16,6 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Títulos */
 h2 {
   color: #333;
   margin-bottom: 20px;
@@ -32,8 +30,6 @@ form {
 
 .form-group {
   margin-bottom: 15px;
-  display: flex;
-  flex-direction: column;
 }
 
 label {
@@ -77,6 +73,26 @@ button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
+/* Campo de Pesquisa */
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-bar input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-bar input[type="text"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+  outline: none;
+}
+
 /* Tabela */
 table {
   width: 100%;
@@ -104,7 +120,6 @@ tbody tr:hover {
   background-color: #f1f1f1;
 }
 
-/* Botões da Tabela */
 button {
   background-color: #28a745;
   color: white;
@@ -126,73 +141,4 @@ button:nth-of-type(2) {
 
 button:nth-of-type(2):hover {
   background-color: #c82333;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-  .container {
-    padding: 15px;
-  }
-
-  h2 {
-    font-size: 24px;
-  }
-
-  .form-group {
-    margin-bottom: 10px;
-  }
-
-  input[type="text"],
-  input[type="email"],
-  input[type="date"] {
-    font-size: 14px;
-    padding: 8px;
-  }
-
-  button[type="submit"] {
-    font-size: 14px;
-    padding: 10px 15px;
-  }
-
-  table th,
-  table td {
-    padding: 8px;
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 10px;
-  }
-
-  h2 {
-    font-size: 20px;
-  }
-
-  .form-group {
-    margin-bottom: 8px;
-  }
-
-  input[type="text"],
-  input[type="email"],
-  input[type="date"] {
-    font-size: 12px;
-    padding: 6px;
-  }
-
-  button[type="submit"] {
-    font-size: 12px;
-    padding: 8px 12px;
-  }
-
-  table th,
-  table td {
-    padding: 6px;
-    font-size: 12px;
-  }
-}
-
-.pdf-button {
-  text-align: right;
 }

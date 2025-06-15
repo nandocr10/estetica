@@ -15,6 +15,10 @@ export interface AtendServ {
   VrServ?: number;
   PercComis?: number;
   Obs?: string;
+  Tppgto?:      number;
+  Stapgto?:     number;   // Campo opcional
+  Percdes?:     number;   // Campo opcional
+  Dtpgto?:     Date;
 }
 
 @Injectable({

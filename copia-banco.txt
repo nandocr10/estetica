@@ -1,0 +1,1 @@
+.\mysqldump.exe -u root -p estetica > C:\temp\bk-estetica
