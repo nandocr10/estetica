@@ -88,4 +88,22 @@ async function deleteEntity(req, res) {
     }
 }
 
-module.exports = { getAll, getById, create, update, deleteEntity };
+async function searchByName(req, res) {
+    const { nome } = req.query; // Supondo que o nome venha como um parâmetro de consulta
+    try {
+        const clientes = await prisma.cliente.findMany({
+            where: {
+                NmCli: {
+                    contains: nome, // Busca parcial pelo nome
+                    mode: 'insensitive', // Ignorar maiúsculas/minúsculas
+                },
+            },
+        });
+        res.status(httpStatus.OK).json(clientes);
+    } catch (err) {
+        console.error(err);
+        res.status(httpStatus.UNPROCESSABLE_ENTITY).send('Erro na busca por nome');
+    }
+}
+
+module.exports = { getAll, getById, create, update, deleteEntity, searchByName };

@@ -1,102 +1,145 @@
-<div class="container">
-  <h2 class="title">Clientes</h2>
+<div class="container mt-5">
+  <h2 class="text-center mb-4 text-primary fw-bold">Cadastro de Clientes</h2>
 
-  <form (ngSubmit)="onSubmit(clienteForm)" #clienteForm="ngForm" class="form-container">
-    <div class="form-group">
-      <label for="NmCli">Nome: <span class="required">*</span></label>
-      <input
-        type="text"
-        id="NmCli"
-        [(ngModel)]="cliente.NmCli"
-        name="NmCli"
-        required
-        class="form-control"
-      />
+  <!-- Campo de pesquisa -->
+  <div class="form-group mb-4">
+    <label for="searchCliente" class="form-label fw-bold">Pesquisar Cliente:</label>
+    <input
+      type="text"
+      id="searchCliente"
+      [(ngModel)]="searchTerm"
+      (input)="onSearch()"
+      placeholder="Digite o nome do cliente"
+      class="form-control border-primary shadow-sm"
+    />
+  </div>
+
+  <form (ngSubmit)="onSubmit(clienteForm)" #clienteForm="ngForm" class="form-container border p-4 rounded shadow-lg bg-light">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="NmCli" class="form-label fw-bold">Nome: <span class="text-danger">*</span></label>
+        <input
+          type="text"
+          id="NmCli"
+          [(ngModel)]="cliente.NmCli"
+          name="NmCli"
+          required
+          class="form-control border-primary shadow-sm"
+          placeholder="Digite o nome completo"
+        />
+        <div *ngIf="clienteForm.controls['NmCli']?.invalid && clienteForm.controls['NmCli']?.touched">
+          <small class="text-danger">O campo "Nome" é obrigatório.</small>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="FoneCli" class="form-label fw-bold">Telefone: <span class="text-danger">*</span></label>
+        <input
+          type="text"
+          id="FoneCli"
+          [(ngModel)]="cliente.FoneCli"
+          name="FoneCli"
+          required
+          class="form-control border-primary shadow-sm"
+          placeholder="(XX) XXXXX-XXXX"
+          mask="(00) 00000-0000"
+        />
+        <div *ngIf="clienteForm.controls['FoneCli']?.invalid && clienteForm.controls['FoneCli']?.touched">
+          <small class="text-danger">O campo "Telefone" é obrigatório.</small>
+        </div>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="CpfCli">CPF:</label>
-      <input
-        type="text"
-        id="CpfCli"
-        [(ngModel)]="cliente.CpfCli"
-        name="CpfCli"
-        maxlength="11"
-        class="form-control"
-      />
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="CpfCli" class="form-label fw-bold">CPF:</label>
+        <input
+          type="text"
+          id="CpfCli"
+          [(ngModel)]="cliente.CpfCli"
+          name="CpfCli"
+          maxlength="14"
+          class="form-control border-primary shadow-sm"
+          placeholder="XXX.XXX.XXX-XX"
+          mask="000.000.000-00"
+        />
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="EmailCli" class="form-label fw-bold">Email:</label>
+        <input
+          type="email"
+          id="EmailCli"
+          [(ngModel)]="cliente.EmailCli"
+          name="EmailCli"
+          maxlength="100"
+          class="form-control border-primary shadow-sm"
+          placeholder="exemplo@email.com"
+        />
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="FoneCli">Telefone: <span class="required">*</span></label>
-      <input
-        type="text"
-        id="FoneCli"
-        [(ngModel)]="cliente.FoneCli"
-        name="FoneCli"
-        required
-        class="form-control"
-      />
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="EndCli" class="form-label fw-bold">Endereço:</label>
+        <input
+          type="text"
+          id="EndCli"
+          [(ngModel)]="cliente.EndCli"
+          name="EndCli"
+          maxlength="200"
+          class="form-control border-primary shadow-sm"
+          placeholder="Digite o endereço completo"
+        />
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="CepCli" class="form-label fw-bold">CEP:</label>
+        <input
+          type="text"
+          id="CepCli"
+          [(ngModel)]="cliente.CepCli"
+          name="CepCli"
+          maxlength="9"
+          class="form-control border-primary shadow-sm"
+          placeholder="XXXXX-XXX"
+          mask="00000-000"
+        />
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="EmailCli">Email:</label>
-      <input
-        type="email"
-        id="EmailCli"
-        [(ngModel)]="cliente.EmailCli"
-        name="EmailCli"
-        class="form-control"
-      />
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="ComplCli" class="form-label fw-bold">Complemento:</label>
+        <input
+          type="text"
+          id="ComplCli"
+          [(ngModel)]="cliente.ComplCli"
+          name="ComplCli"
+          maxlength="100"
+          class="form-control border-primary shadow-sm"
+          placeholder="Digite o complemento"
+        />
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="redesocial" class="form-label fw-bold">Rede Social:</label>
+        <input
+          type="text"
+          id="redesocial"
+          [(ngModel)]="cliente.redesocial"
+          name="redesocial"
+          maxlength="100"
+          class="form-control border-primary shadow-sm"
+          placeholder="Digite o link da rede social"
+        />
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="EndCli">Endereço:</label>
-      <input
-        type="text"
-        id="EndCli"
-        [(ngModel)]="cliente.EndCli"
-        name="EndCli"
-        class="form-control"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="CepCli">CEP:</label>
-      <input
-        type="text"
-        id="CepCli"
-        [(ngModel)]="cliente.CepCli"
-        name="CepCli"
-        class="form-control"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="ComplCli">Complemento:</label>
-      <input
-        type="text"
-        id="ComplCli"
-        [(ngModel)]="cliente.ComplCli"
-        name="ComplCli"
-        class="form-control"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="redesocial">Rede Social:</label>
-      <input
-        type="text"
-        id="redesocial"
-        [(ngModel)]="cliente.redesocial"
-        name="redesocial"
-        class="form-control"
-      />
-    </div>
-
-    <div class="form-actions">
+    <div class="form-actions text-center">
       <button
         type="submit"
-        class="btn btn-primary"
+        class="btn btn-primary me-2 shadow-sm"
         [disabled]="!clienteForm.form.valid"
       >
         {{ isEditing ? 'Atualizar' : 'Salvar' }}
@@ -104,60 +147,52 @@
       <button
         type="button"
         (click)="resetForm(clienteForm)"
-        class="btn btn-secondary"
+        class="btn btn-secondary shadow-sm"
         *ngIf="isEditing"
       >
         Cancelar
       </button>
     </div>
   </form>
+</div>
 
-  <!-- Botão para gerar o PDF -->
-  <div class="pdf-button mb-3">
-    <button (click)="gerarPDF()" class="btn btn-success">
-      <i class="fas fa-file-pdf"></i> Gerar Relatório PDF
-    </button>
-  </div>
-
-  <div class="table-container">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>CPF</th>
-          <th>Telefone</th>
-          <th>Email</th>
-          <th>Rede Social</th>
-          <th>Data da Última Compra</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let c of clientes">
-          <td>{{ c.Codcli }}</td>
-          <td>{{ c.NmCli }}</td>
-          <td>{{ c.CpfCli }}</td>
-          <td>{{ c.FoneCli }}</td>
-          <td>{{ c.EmailCli }}</td>
-          <td>{{ c.redesocial }}</td>
-          <td>{{ c.DtUltCompra | date: 'dd/MM/yyyy' }}</td>
-          <td>
-            <button
-              (click)="editCliente(c.Codcli)"
-              class="btn btn-warning btn-sm"
-            >
-              Editar
-            </button>
-            <button
-              (click)="deleteCliente(c.Codcli)"
-              class="btn btn-danger btn-sm"
-            >
-              Excluir
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<!-- Tabela de clientes -->
+<div class="table-container mt-4">
+  <table class="table table-striped shadow-sm">
+    <thead class="table-primary">
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Telefone</th>
+        <th>Email</th>
+        <th>Rede Social</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of filteredClientes">
+        <td>{{ c.Codcli }}</td>
+        <td>{{ c.NmCli }}</td>
+        <td>{{ c.CpfCli }}</td>
+        <td>{{ c.FoneCli }}</td>
+        <td>{{ c.EmailCli }}</td>
+        <td>{{ c.redesocial }}</td>
+        <td>
+          <button
+            (click)="editCliente(c.Codcli)"
+            class="btn btn-warning btn-sm shadow-sm"
+          >
+            Editar
+          </button>
+          <button
+            (click)="deleteCliente(c.Codcli)"
+            class="btn btn-danger btn-sm shadow-sm"
+          >
+            Excluir
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

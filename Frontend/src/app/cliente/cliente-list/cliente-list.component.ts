@@ -13,6 +13,8 @@ import autoTable from 'jspdf-autotable';
 })
 export class ClienteListComponent implements OnInit {
   clientes: Cliente[] = [];
+  filteredClientes: Cliente[] = []; // Lista filtrada
+  searchTerm: string = ''; // Termo de pesquisa
   cliente: Cliente = {
     Codcli: 0,
     NmCli: '',
@@ -36,6 +38,7 @@ export class ClienteListComponent implements OnInit {
   loadClientes(): void {
     this.clienteService.getClientes().subscribe(data => {
       this.clientes = data;
+      this.filteredClientes = data; // Inicializa a lista filtrada
     });
   }
 
@@ -116,5 +119,11 @@ export class ClienteListComponent implements OnInit {
     });
 
     doc.save('relatorio_clientes.pdf');
+  }
+
+  onSearch(): void {
+    this.filteredClientes = this.clientes.filter(cliente =>
+      cliente.NmCli.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 }
