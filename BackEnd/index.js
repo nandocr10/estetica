@@ -18,6 +18,7 @@ const atendimento = require('./src/routes/atendimento');
 const profissional = require('./src/routes/profissional');
 const atendServ = require('./src/routes/atendserv');
 const produto = require('./src/routes/produtos'); // Adicionando a rota para Produto
+const whatsappRoutes = require('./src/routes/whatsappRoutes'); // Adicionando a rota para Produto
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
@@ -52,6 +53,7 @@ app.use('/atendimento', atendimento);
 app.use('/profissional', profissional);
 app.use('/atendserv', atendServ);
 app.use('/produtos',  produto); // Adicionando a rota para Produto com autenticação
+app.use('/whatsappRoute',  whatsappRoutes); // Adicionando a rota para Produto com autenticação
 
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 

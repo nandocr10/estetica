@@ -56,11 +56,9 @@
 </div>
 
 <script>
-  viewMode: string = 'day'; // Define o modo de visualização inicial como 'day'
-  days: string[] = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']; // Inicializa os dias da semana
-
+  viewMode: string = 'day';
+  days: string[] = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
   getAppointmentsForDay(day: string): any[] {
-    // Retorna os agendamentos filtrados por dia
     return this.agendamentos.filter((agendamento) => agendamento.dia === day);
   }
 </script>

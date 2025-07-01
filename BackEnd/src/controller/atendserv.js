@@ -65,7 +65,6 @@ function compressToBase64(data) {
 
 async function create(req, res) {
     try {
-        //console.log(req.body);
         const {
             CodAtend,
             CodServ,
@@ -84,17 +83,32 @@ async function create(req, res) {
             Dtpgto 
         } = req.body;
 
+        // Verificação de conflito de horário para o mesmo profissional
+        if (CodProf && DtAgen) {
+            const conflito = await prisma.atendServ.findFirst({
+                where: {
+                    CodProf: parseInt(CodProf),
+                    DtAgen: new Date(DtAgen)
+                }
+            });
+            if (conflito) {
+                return res.status(httpStatus.CONFLICT).json({
+                    message: 'Já existe um atendimento para este profissional nesta data e hora.'
+                });
+            }
+        }
+
         // Compactar os campos de imagem (FtEnt01 e outros, se necessário)
         const compactedFtEnt01 = FtEnt01;
         const compactedFtEnt02 = compressToBase64(FtEnt02);
         const compactedFtRet01 = compressToBase64(FtRet01);
         const compactedFtRet02 = compressToBase64(FtRet02);
-        //console.log(compactedFtEnt01);
+
         const atendimento = await prisma.atendServ.create({
             data: {
                 CodAtend: CodAtend,
                 CodServ: parseInt(CodServ),
-                CodProf: CodProf ? parseInt(CodProf) : null, // Trata opcional
+                CodProf: CodProf ? parseInt(CodProf) : null,
                 DtAgen: DtAgen ? new Date(DtAgen) : null,
                 FtEnt01: compactedFtEnt01,
                 FtEnt02: compactedFtEnt02,
