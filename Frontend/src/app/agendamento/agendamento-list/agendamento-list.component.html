@@ -42,6 +42,12 @@
           <div class="agenda-card-service">
             <i class="{{ getIconClass(appointment.servico) }}"></i> {{ appointment.servico }}
           </div>
+          <!-- Botão WhatsApp -->
+          <button class="zap-btn"
+                  (click)="enviarZap(appointment, $event)"
+                  title="Enviar WhatsApp">
+            <i class="fa fa-whatsapp"></i>
+          </button>
         </div>
       </div>
       <ng-template #noAppointments>
@@ -55,10 +61,4 @@
   </div>
 </div>
 
-<script>
-  viewMode: string = 'day';
-  days: string[] = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-  getAppointmentsForDay(day: string): any[] {
-    return this.agendamentos.filter((agendamento) => agendamento.dia === day);
-  }
-</script>
+

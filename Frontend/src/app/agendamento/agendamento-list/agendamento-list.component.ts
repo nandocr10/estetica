@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AgendamentoService, Atendimento } from 'src/api/services/agendamento.service';
@@ -17,7 +18,8 @@ export class AgendamentoListComponent implements OnInit, OnDestroy {
   constructor(
     private agendamentoService: AgendamentoService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -73,6 +75,7 @@ export class AgendamentoListComponent implements OnInit, OnDestroy {
                   servico: servico['servico']?.DsServ || 'Serviço não especificado',
                   data: dataServico.toLocaleDateString(),
                   hora: dataServico.toLocaleTimeString(),
+                  telefone: (cliente as any).FoneCli || (cliente as any).fone || (cliente as any).telefone || ''
                 });
               }
             });
@@ -131,5 +134,21 @@ export class AgendamentoListComponent implements OnInit, OnDestroy {
     const now = new Date();
     const diff = (atendimentoDate.getTime() - now.getTime()) / 60000; // diferença em minutos
     return diff > 0 && diff <= 5;
+  }
+
+  enviarZap(appointment: any, event: Event) {
+    event.stopPropagation(); // Para não acionar o detalharServico
+    const phone = appointment.telefone;
+    const message =
+      `Olá ${appointment.cliente}, tudo bem?\n\n` +
+      `Seu atendimento de *${appointment.servico}* está agendado para o dia ${appointment.data} às ${appointment.hora}.\n\n` +
+      `Por favor, responda *Sim* para confirmar ou *Não* para cancelar.\n\n` +
+      `Qualquer dúvida, estamos à disposição.\n` +
+      `Será um prazer recebê-lo(a) em nossa clínica! 😘`;
+
+    this.http.post('http://localhost:3000/whatsappRoute/send-whatsapp', { phone, message }).subscribe({
+      next: () => alert('Mensagem enviada pelo WhatsApp!'),
+      error: () => alert('Erro ao enviar WhatsApp.')
+    });
   }
 }

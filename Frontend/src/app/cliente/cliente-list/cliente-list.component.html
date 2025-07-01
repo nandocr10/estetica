@@ -171,6 +171,7 @@
           <th>Telefone</th>
           <th>Email</th>
           <th>Rede Social</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -181,8 +182,30 @@
           <td>{{ c.FoneCli }}</td>
           <td>{{ c.EmailCli }}</td>
           <td>{{ c.redesocial }}</td>
+          <td>
+            <button class="btn btn-sm btn-primary me-1" (click)="editCliente(c)">
+              <i class="fa fa-edit"></i> Editar
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="deleteCliente(c.Codcli)">
+              <i class="fa fa-trash"></i> Excluir
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center mt-3">
+    <button class="btn btn-outline-primary btn-sm me-2"
+        [disabled]="currentPage === 1"
+        (click)="changePage(currentPage - 1)">
+      &laquo; Anterior
+    </button>
+    <span>Página {{ currentPage }} de {{ totalPages }}</span>
+    <button class="btn btn-outline-primary btn-sm ms-2"
+        [disabled]="currentPage === totalPages"
+        (click)="changePage(currentPage + 1)">
+      Próxima &raquo;
+    </button>
   </div>
 </div>
