@@ -55,6 +55,7 @@ import {ImageUploadComponent} from './image-upload/image-upload.component'; // A
 
 //import { ProdutosListComponent } from './produtos/';
 import { ProdutoListComponent } from './produtos/produtos-list/produtos-list.component';
+import { AgendamentoListComponent } from './agendamento/agendamento-list/agendamento-list.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { ProdutoListComponent } from './produtos/produtos-list/produtos-list.com
     CurrencyFormatPipe, // Adicione o pipe aqui
     PercentageFormatPipe, // Adicione o pipe aqui
     ImageUploadComponent,
-    ProdutoListComponent
+    ProdutoListComponent,
+    AgendamentoListComponent
   ],
   imports: [
     BrowserModule,

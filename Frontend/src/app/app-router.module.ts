@@ -35,6 +35,7 @@ import { AtendServListComponent } from './atendserv/atendserv-list/atendserv-lis
 import { AtendServFormComponent } from './atendserv/atendserv-list/atendserv-form.component';
 
 import { ProdutoListComponent } from './produtos/produtos-list/produtos-list.component';
+import { AgendamentoListComponent } from './agendamento/agendamento-list/agendamento-list.component'; // Importação do componente de agendamento
 
 
 const routes: Routes = [
@@ -68,18 +69,21 @@ const routes: Routes = [
   { path: 'atendserv', component: AtendServListComponent, canActivate: [AuthGuard] },
   { path: 'atendserv/novo', component: AtendServFormComponent, canActivate: [AuthGuard] },
   { path: 'atendserv/:id/editar', component: AtendServFormComponent, canActivate: [AuthGuard] },
-  { path: 'atend-serv/:codAtend/:codCli', component: AtendServListComponent },
+  { path: 'atendserv/:codAtend/:codCli', component: AtendServListComponent },
+  { path: 'atend-serv/:codAtend/:codCli', component: AtendServListComponent }, // <-- Adicione esta linha
 
   // Rotas para Profissional
   { path: 'profissionais', component: ProfissionalListComponent, canActivate: [AuthGuard] },
   { path: 'profissionais/novo', component: ProfissionalFormComponent, canActivate: [AuthGuard] },
   { path: 'profissionais/:id/editar', component: ProfissionalFormComponent, canActivate: [AuthGuard] },
 
- // Rotas para Produtos
- { path: 'produtos', component: ProdutoListComponent, canActivate: [AuthGuard] },
- { path: 'produtos/novo', component: ProdutoListComponent, canActivate: [AuthGuard] },
- { path: 'produtos/:id/editar', component: ProdutoListComponent, canActivate: [AuthGuard] },
+  // Rotas para Produtos
+  { path: 'produtos', component: ProdutoListComponent, canActivate: [AuthGuard] },
+  { path: 'produtos/novo', component: ProdutoListComponent, canActivate: [AuthGuard] },
+  { path: 'produtos/:id/editar', component: ProdutoListComponent, canActivate: [AuthGuard] },
 
+  // Rota para Agendamento
+  { path: 'agendamentos', component: AgendamentoListComponent, canActivate: [AuthGuard] }, // Nova rota adicionada
 
   {
     path: 'unidades',

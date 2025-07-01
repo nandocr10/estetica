@@ -4,6 +4,9 @@ import { ClienteService, Cliente } from 'src/api/services/cliente.services';
 import { NgForm } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { ChangeDetectorRef } from '@angular/core';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-atendimento-list',
@@ -33,7 +36,8 @@ export class AtendimentoListComponent implements OnInit {
   constructor(
     private atendimentoService: AtendimentoService,
     private clienteService: ClienteService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -41,14 +45,14 @@ export class AtendimentoListComponent implements OnInit {
   }
 
   getStatusText(staatend: any): string {
-    console.log('Estado recebido:', staatend); // Para ver o que está chegando na função
-  
+    console.log('Estado recebido:', staatend); // Para depuração
+
     const statusMap: { [key: string]: string } = {
       '1': 'Ativo',
       '2': 'Em Atendimento',
       '3': 'Encerrado'
     };
-  
+
     return statusMap[staatend?.toString()] || 'Desconhecido';
   }
 
@@ -57,9 +61,21 @@ export class AtendimentoListComponent implements OnInit {
       this.clienteService.getClientes(),
       this.atendimentoService.getAtendimentos()
     ]).subscribe(([clientes, atendimentos]) => {
+      console.log('Atendimentos retornados pela API:', atendimentos); // Log dos atendimentos
+
       this.clientes = clientes;
-      this.atendimentos = atendimentos;
-      this.atendimentosFiltrados = atendimentos;
+      this.atendimentos = atendimentos.map(atendimento => ({
+        ...atendimento,
+        servicos: atendimento.atendServ?.map(servico => ({
+          IdServico: servico.CodServ,
+          DescricaoServico: servico['servico']?.DsServ || 'Serviço não especificado', // Usa o campo correto DsServ
+          Valor: parseFloat(servico.VrServ) || 0 // Converte o valor para número
+        })) || [] // Garante que 'servicos' seja um array de objetos do tipo Servico
+      }));
+
+      console.log('Atendimentos após mapeamento:', this.atendimentos); // Log após mapeamento
+
+      this.atendimentosFiltrados = this.atendimentos;
       this.calculateTotalPages();
       this.cdRef.detectChanges();
     });
@@ -112,6 +128,57 @@ export class AtendimentoListComponent implements OnInit {
         this.loadData();
       });
     }
+  }
+
+  exportAtendimentos(): void {
+    console.log('Iniciando exportação de atendimentos...'); // Log inicial
+
+    const atendimentosComServicos = this.atendimentosFiltrados.map(atendimento => {
+      console.log('Processando atendimento:', atendimento); // Log do atendimento atual
+
+      // Concatena descrição e valor de cada serviço
+      const servicos = (atendimento.servicos || [])
+        .map(servico => `${servico.DescricaoServico} (R$ ${servico.Valor.toFixed(2)})`)
+        .join(', ');
+
+      const valorTotalServicos = (atendimento.servicos || []).reduce((total, servico) => total + servico.Valor, 0); // Soma os valores dos serviços
+
+      console.log('Serviços concatenados:', servicos); // Log dos serviços concatenados
+      console.log('Valor total dos serviços:', valorTotalServicos); // Log do valor total dos serviços
+
+      return {
+        CodAtend: atendimento.CodAtend,
+        NomeCliente: this.getNomeCliente(atendimento.Codcli),
+        Codcli: atendimento.Codcli,
+        DtAgen: atendimento.DtAgen,
+        Obs: atendimento.Obs,
+        Status: this.getStatusText(atendimento.Staatend),
+        Servicos: servicos, // Adiciona os serviços associados ao atendimento
+        ValorTotalServicos: valorTotalServicos // Adiciona o valor total dos serviços
+      };
+    });
+
+    console.log('Atendimentos processados para exportação:', atendimentosComServicos); // Log dos atendimentos processados
+
+    const worksheet = XLSX.utils.json_to_sheet(atendimentosComServicos);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Atendimentos');
+
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    saveAs(blob, 'relatorio_atendimentos_com_servicos.xlsx');
+
+    console.log('Exportação concluída e arquivo gerado.'); // Log final
+  }
+
+  loadServicos(codAtend: number): void {
+    this.atendimentoService.getServicosByAtendimento(codAtend).subscribe(servicos => {
+      console.log('Serviços associados:', servicos); // Log dos serviços
+    });
+  }
+
+  novoCliente(): void {
+    this.router.navigate(['/clientes']);
   }
 }
 

@@ -5,6 +5,8 @@ import { NgForm } from '@angular/forms';
 // >>> IMPORTANDO AS BIBLIOTECAS
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-cliente-list',
@@ -14,6 +16,11 @@ import autoTable from 'jspdf-autotable';
 export class ClienteListComponent implements OnInit {
   clientes: Cliente[] = [];
   filteredClientes: Cliente[] = []; // Lista filtrada
+  paginatedClientes: Cliente[] = []; // Lista de clientes para exibição na página atual
+  currentPage: number = 1; // Página atual
+  itemsPerPage: number = 10; // Número de itens por página
+  totalPages: number = 0; // Total de páginas
+  totalPagesArray: number[] = []; // Array para exibição de páginas
   searchTerm: string = ''; // Termo de pesquisa
   cliente: Cliente = {
     Codcli: 0,
@@ -29,6 +36,16 @@ export class ClienteListComponent implements OnInit {
   };
   isEditing: boolean = false; // Adiciona uma flag para o modo de edição
 
+  // Inicialize o objeto de ordenação
+  sortOrder: { [key: string]: string } = {
+    Codcli: 'asc',
+    NmCli: 'asc',
+    CpfCli: 'asc',
+    FoneCli: 'asc',
+    EmailCli: 'asc',
+    redesocial: 'asc',
+  };
+
   constructor(private clienteService: ClienteService) {}
 
   ngOnInit(): void {
@@ -39,7 +56,21 @@ export class ClienteListComponent implements OnInit {
     this.clienteService.getClientes().subscribe(data => {
       this.clientes = data;
       this.filteredClientes = data; // Inicializa a lista filtrada
+      this.calculatePagination();
     });
+  }
+
+  calculatePagination(): void {
+    this.totalPages = Math.ceil(this.filteredClientes.length / this.itemsPerPage);
+    this.totalPagesArray = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    this.changePage(1);
+  }
+
+  changePage(page: number): void {
+    this.currentPage = page;
+    const startIndex = (page - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedClientes = this.filteredClientes.slice(startIndex, endIndex);
   }
 
   onSubmit(form: NgForm): void {
@@ -125,5 +156,33 @@ export class ClienteListComponent implements OnInit {
     this.filteredClientes = this.clientes.filter(cliente =>
       cliente.NmCli.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
+    this.calculatePagination();
+  }
+
+  sortColumn(column: string): void {
+    const isAscending = this.sortOrder[column] === 'asc';
+    this.sortOrder[column] = isAscending ? 'desc' : 'asc';
+
+    this.filteredClientes.sort((a, b) => {
+      if (a[column] < b[column]) {
+        return isAscending ? -1 : 1;
+      }
+      if (a[column] > b[column]) {
+        return isAscending ? 1 : -1;
+      }
+      return 0;
+    });
+
+    this.calculatePagination(); // Recalcula a paginação após a ordenação
+  }
+
+  exportToExcel(): void {
+    const worksheet = XLSX.utils.json_to_sheet(this.clientes);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Clientes');
+
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    saveAs(blob, 'clientes.xlsx');
   }
 }

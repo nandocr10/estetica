@@ -1,0 +1,66 @@
+<div class="agenda-wrapper">
+  <div class="agenda-header">
+    <div class="agenda-logo-wrapper">
+      <img src="assets/LOGOTIPO.png" alt="Logo Belle Clinic" class="agenda-logo" />
+    </div>
+    <div>
+      <h1 class="agenda-title">Agenda Semanal</h1>
+      <div class="agenda-nav">
+        <button class="agenda-btn" (click)="navigateWeek('previous')">
+          <i class="fa fa-chevron-left"></i> Semana Anterior
+        </button>
+        <span class="agenda-range">
+          {{ currentWeekStart | date:'dd/MM/yyyy' }} - {{ currentWeekEnd | date:'dd/MM/yyyy' }}
+        </span>
+        <button class="agenda-btn" (click)="navigateWeek('next')">
+          Próxima Semana <i class="fa fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="agenda-days">
+    <div class="agenda-day" *ngFor="let day of days">
+      <div class="agenda-day-header">
+        <span class="agenda-day-name">{{ day }}</span>
+        <span class="agenda-day-date">{{ getDateForDay(day) | date:'dd/MM/yy' }}</span>
+      </div>
+      <div *ngIf="agendamentosPorData[day]?.length; else noAppointments">
+        <div class="agenda-card"
+             *ngFor="let appointment of agendamentosPorData[day]"
+             (click)="detalharServico(appointment.CodAtend, appointment.CodCli)">
+          
+          <div *ngIf="isFiveMinutesBefore(appointment)" class="alert alert-warning p-1 mb-2 text-center" style="font-size:0.95rem;">
+            <i class="fa fa-bell"></i> Atendimento irá iniciar em 5 minutos!
+          </div>
+          <div class="agenda-card-time">
+            <i class="fa fa-clock"></i> {{ appointment.hora }}
+          </div>
+          <div class="agenda-card-client">
+            <i class="fa fa-user"></i> {{ appointment.cliente }}
+          </div>
+          <div class="agenda-card-service">
+            <i class="{{ getIconClass(appointment.servico) }}"></i> {{ appointment.servico }}
+          </div>
+        </div>
+      </div>
+      <ng-template #noAppointments>
+        <div class="agenda-card agenda-card-empty"
+             style="cursor:pointer"
+             (click)="novoAtendimento(day)">
+          <i class="fa fa-calendar-times"></i> Nenhum agendamento
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<script>
+  viewMode: string = 'day'; // Define o modo de visualização inicial como 'day'
+  days: string[] = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']; // Inicializa os dias da semana
+
+  getAppointmentsForDay(day: string): any[] {
+    // Retorna os agendamentos filtrados por dia
+    return this.agendamentos.filter((agendamento) => agendamento.dia === day);
+  }
+</script>

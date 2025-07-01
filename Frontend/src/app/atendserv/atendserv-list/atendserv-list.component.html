@@ -1,242 +1,204 @@
 <div class="container py-5">
   <!-- Título Principal -->
-  <h2 class="text-center text-primary mb-4">Atendimentos de Serviço</h2>
+  <h2 class="text-center text-primary mb-4 fw-bold">Atendimentos de Serviço</h2>
 
   <!-- Formulário de Atendimento -->
   <form
     #atendimentoForm="ngForm"
     (ngSubmit)="onSubmit(atendimentoForm)"
-    class="card shadow p-4 mb-5"
+    class="card shadow-lg p-4 mb-5 bg-light rounded"
   >
-  
-    <!-- Código do Atendimento -->
-    <div class="form-group">
-      <label for="CodAtend" class="font-weight-bold">Atendimento:</label>
-      <input
-        type="text"
-        class="form-control destaque-campo"
-        [(ngModel)]="codAtend"
-        name="CodAtend"
-        readonly
-        required
-      />
-    </div>
+    <div class="row">
+      <!-- Código do Atendimento -->
+      <div class="col-md-6 mb-3">
+        <label for="CodAtend" class="form-label fw-bold">Código do Atendimento:</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="codAtend"
+          name="CodAtend"
+          readonly
+          required
+        />
+      </div>
 
-    <div class="form-group">
-      <label for="NomeCliente" class="font-weight-bold">Nome do Cliente:</label>
-      <input
-        type="text"
-        class="form-control destaque-campo"
-        [value]="getNomeCliente(codAtend)"
-        name="NomeCliente"
-        readonly
-        required
-      />
-    </div>
-
-    <!-- Serviço -->
-    <div class="form-group">
-      <label for="CodServ" class="font-weight-bold">Serviço:</label>
-      <select
-        class="form-control"
-        [(ngModel)]="atendimento.CodServ"
-        name="CodServ"
-        required
-      >
-        <option value="" disabled>Selecione um serviço</option>
-        <option
-          *ngFor="let servico of servicos"
-          [value]="servico.CodServ"
-        >
-          {{ servico.DsServ }}
-        </option>
-      </select>
-    </div>
-
-    <!-- Profissional -->
-    <div class="form-group">
-      <label for="CodProf" class="font-weight-bold">Profissional:</label>
-      <select
-        class="form-control"
-        [(ngModel)]="atendimento.CodProf"
-        name="CodProf"
-      >
-        <option value="" disabled>Selecione um profissional</option>
-        <option
-          *ngFor="let profissional of profissionais"
-          [value]="profissional.CodProf"
-        >
-          {{ profissional.NmProf }}
-        </option>
-      </select>
-    </div>
-
-    <!-- Data e Hora -->
-    <div class="form-group">
-      <label for="DtAgen" class="font-weight-bold">Data e Hora de Agendamento:</label>
-      <input 
-        type="datetime-local" 
-        class="form-control" 
-        [(ngModel)]="atendimento.DtAgen" 
-        name="DtAgen" 
-        required 
-        step="900"
-      />
-      <!-- Incremento de 15 minutos -->
-    </div>
-
-   <!-- Upload de Imagens -->
-   <div class="row">
-    <!-- Foto 1 -->
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="FtEnt01" class="font-weight-bold">Foto 01:</label>
-        <ng-container *ngIf="atendimento?.FtEnt01; else uploadTemplate">
-          <img [src]="atendimento.FtEnt01" alt="Imagem de Entrada 01" class="img-thumbnail" style="max-width: 300px; height: 200px;" />
-        </ng-container>
-        <ng-template #uploadTemplate>
-          <app-image-upload (imageSelected)="atendimento.FtEnt01 = $event"></app-image-upload>
-        </ng-template>
+      <!-- Nome do Cliente -->
+      <div class="col-md-6 mb-3">
+        <label for="NomeCliente" class="form-label fw-bold">Nome do Cliente:</label>
+        <input
+          type="text"
+          class="form-control"
+          [value]="getNomeCliente(codAtend)"
+          name="NomeCliente"
+          readonly
+          required
+        />
       </div>
     </div>
-  
-    <!-- Foto 2 -->
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="FtEnt02" class="font-weight-bold">Foto 02:</label>
-        <ng-container *ngIf="atendimento?.FtEnt02; else uploadTemplate2">
-          <img [src]="atendimento.FtEnt02" alt="Imagem de Entrada 02" class="img-thumbnail" style="max-width: 200px; height: 200px;" />
-        </ng-container>
-        <ng-template #uploadTemplate2>
-          <app-image-upload (imageSelected)="atendimento.FtEnt02 = $event"></app-image-upload>
-        </ng-template>
-      </div>
-    </div>
-  </div>
-  
-<!-- Foto 3 -->
-<div class="col-md-6">
-  <div class="form-group">
-    <label for="FtRet01" class="font-weight-bold">Foto 03:</label>
-    <ng-container *ngIf="atendimento?.FtRet01; else uploadTemplate3">
-      <img [src]="atendimento.FtRet01" alt="Imagem de Retorno 01" class="img-thumbnail" style="max-width: 300px; height: 200px;" />
-    </ng-container>
-    <ng-template #uploadTemplate3>
-      <app-image-upload (imageSelected)="atendimento.FtRet01 = $event"></app-image-upload>
-    </ng-template>
-  </div>
-</div>
-
-<!-- Foto 4 -->
-<div class="col-md-6">
-  <div class="form-group">
-    <label for="FtRet02" class="font-weight-bold">Foto 04:</label>
-    <ng-container *ngIf="atendimento?.FtRet02; else uploadTemplate4">
-      <img [src]="atendimento.FtRet02" alt="Imagem de Retorno 02" class="img-thumbnail" style="max-width: 300px; height: 200px;" />
-    </ng-container>
-    <ng-template #uploadTemplate4>
-      <app-image-upload (imageSelected)="atendimento.FtRet02 = $event"></app-image-upload>
-    </ng-template>
-  </div>
-</div>
 
     <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="VrServ" class="font-weight-bold">Valor do Serviço (R$):</label>
-          <input
-            type="number"
-            class="form-control"
-            [(ngModel)]="atendimento.VrServ"
-            name="VrServ"
-            min="0"
-            step="0.01"
-            placeholder="0.00"
-            required
-          />
-        </div>
+      <!-- Serviço -->
+      <div class="col-md-6 mb-3">
+        <label for="CodServ" class="form-label fw-bold">Serviço:</label>
+        <select
+          class="form-select"
+          [(ngModel)]="atendimento.CodServ"
+          name="CodServ"
+          required
+        >
+          <option value="" disabled>Selecione um serviço</option>
+          <option *ngFor="let servico of servicos" [value]="servico.CodServ">
+            {{ servico.DsServ }}
+          </option>
+        </select>
       </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="PercComis" class="font-weight-bold">Comissão (%):</label>
-          <input
-            type="number"
-            class="form-control"
-            [(ngModel)]="atendimento.PercComis"
-            name="PercComis"
-            min="0"
-            max="100"
-            step="0.01"
-            placeholder="0.00"
-            required
-          />
-        </div>
+
+      <!-- Profissional -->
+      <div class="col-md-6 mb-3">
+        <label for="CodProf" class="form-label fw-bold">Profissional:</label>
+        <select
+          class="form-select"
+          [(ngModel)]="atendimento.CodProf"
+          name="CodProf"
+        >
+          <option value="" disabled>Selecione um profissional</option>
+          <option *ngFor="let profissional of profissionais" [value]="profissional.CodProf">
+            {{ profissional.NmProf }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Data e Hora -->
+      <div class="col-md-6 mb-3">
+        <label for="DtAgen" class="form-label fw-bold">Data e Hora de Agendamento:</label>
+        <input
+          type="datetime-local"
+          class="form-control"
+          [(ngModel)]="atendimento.DtAgen"
+          name="DtAgen"
+          required
+          step="900"
+          placeholder="Selecione a data e hora"
+        />
+      </div>
+
+      <!-- Valor do Serviço -->
+      <div class="col-md-6 mb-3">
+        <label for="VrServ" class="form-label fw-bold">Valor do Serviço (R$):</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="atendimento.VrServ"
+          name="VrServ"
+          min="0"
+          step="0.01"
+          placeholder="0.00"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Comissão -->
+      <div class="col-md-6 mb-3">
+        <label for="PercComis" class="form-label fw-bold">Comissão (%):</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="atendimento.PercComis"
+          name="PercComis"
+          min="0"
+          max="100"
+          step="0.01"
+          placeholder="0.00"
+          required
+        />
+      </div>
+
+      <!-- Percentual de Desconto -->
+      <div class="col-md-6 mb-3">
+        <label for="Percdes" class="form-label fw-bold">Percentual de Desconto (%):</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="atendimento.Percdes"
+          name="Percdes"
+          min="0"
+          max="100"
+          step="0.01"
+          placeholder="0.00"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Tipo de Pagamento -->
+      <div class="col-md-6 mb-3">
+        <label for="Tppgto" class="form-label fw-bold">Tipo de Pagamento:</label>
+        <select
+          class="form-select"
+          [(ngModel)]="atendimento.Tppgto"
+          name="Tppgto"
+          required
+        >
+          <option value="" disabled>Selecione o tipo de pagamento</option>
+          <option *ngFor="let tipo of tiposPagamento" [value]="tipo.id">
+            {{ tipo.nome }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Status do Pagamento -->
+      <div class="col-md-6 mb-3">
+        <label for="Stapgto" class="form-label fw-bold">Status do Pagamento:</label>
+        <select
+          class="form-select"
+          [(ngModel)]="atendimento.Stapgto"
+          name="Stapgto"
+        >
+          <option value="" disabled>Selecione o status</option>
+          <option *ngFor="let status of statusPagamento" [value]="status.id">
+            {{ status.nome }}
+          </option>
+        </select>
       </div>
     </div>
 
     <!-- Observações -->
-    <div class="form-group">
-      <label for="Obs">Observações:</label>
+    <div class="mb-3">
+      <label for="Obs" class="form-label fw-bold">Observações:</label>
       <textarea
         [(ngModel)]="atendimento.Obs"
         name="Obs"
         rows="3"
-        class="form-control obs-curta"
+        class="form-control"
       ></textarea>
     </div>
-<!-- Tipo de Pagamento -->
-<div class="form-group">
-  <label for="Tppgto" class="font-weight-bold">Tipo de Pagamento:</label>
-  <select class="form-control" [(ngModel)]="atendimento.Tppgto" name="Tppgto" required>
-    <option value="" disabled>Selecione o tipo de pagamento</option>
-    <option *ngFor="let tipo of tiposPagamento" [value]="tipo.id">
-      {{ tipo.nome }}
-    </option>
-  </select>
-</div>
 
-<!-- Status do Pagamento -->
-<div class="form-group">
-  <label for="Stapgto" class="font-weight-bold">Status do Pagamento:</label>
-  <select class="form-control" [(ngModel)]="atendimento.Stapgto" name="Stapgto">
-    <option value="" disabled>Selecione o status</option>
-    <option *ngFor="let status of statusPagamento" [value]="status.id">
-      {{ status.nome }}
-    </option>
-  </select>
-</div>
+    <!-- Data de Pagamento -->
+    <div class="mb-3">
+      <label for="Dtpgto" class="form-label fw-bold">Data de Pagamento:</label>
+      <input
+        type="date"
+        class="form-control"
+        [(ngModel)]="atendimento.Dtpgto"
+        name="Dtpgto"
+        required
+      />
+    </div>
 
-<!-- Percentual de Desconto -->
-<div class="form-group">
-  <label for="Percdes" class="font-weight-bold">Percentual de Desconto (%):</label>
-  <input 
-    type="number" 
-    class="form-control" 
-    [(ngModel)]="atendimento.Percdes" 
-    name="Percdes" 
-    min="0" 
-    max="100" 
-    step="0.01" 
-    placeholder="0.00"
-  />
-</div>
-  <!-- Data Pgto -->
-  <div class="form-group">
-    <label for="Dtpgto" class="font-weight-bold">Data de Pgto:</label>
-    <input type="date" class="form-control" [(ngModel)]="atendimento.Dtpgto" name="Dtpgto" required />
-  </div>
-
-
-    <!-- Botão de Envio -->
-    <button
-      type="submit"
-      class="btn btn-success btn-block"
-      [disabled]="atendimentoForm.invalid"
-    >
-      {{ isEditing ? 'Atualizar' : 'Adicionar' }}
-    </button>
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <button class="btn btn-secondary" (click)="voltar()">
+    <!-- Botões -->
+    <div class="d-flex justify-content-between">
+      <button
+        type="submit"
+        class="btn btn-success shadow-sm"
+        [disabled]="atendimentoForm.invalid"
+      >
+        {{ isEditing ? 'Atualizar' : 'Adicionar' }}
+      </button>
+      <button class="btn btn-secondary shadow-sm" (click)="voltar()">
         Voltar
       </button>
     </div>
@@ -250,46 +212,47 @@
     </div>
   </form>
 
-    <!-- Lista de Atendimentos -->
-<h3 class="text-center text-secondary mt-4">Lista de Atendimentos</h3>
-<div class="table-responsive">
-  <table class="table table-bordered table-hover mt-3">
-    <thead class="thead-dark">
-      <tr>
-        <th>Código do Atendimento</th>
-        <th>Serviço</th>
-        <th class="col-data-hora">Data e Hora</th>
-        <th>Profissional</th>
-        <th>Valor (R$)</th>
-        <th>Comissão (%)</th>
-        <th class="observacao-coluna">Observações</th> <!-- Classe para Observações -->
-        <th class="text-center">Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let atendimento of atendServs">
-        <td>{{ atendimento.CodAtend }}</td>
-        <td>{{ getServicoNome(atendimento.CodServ) }}</td>
-        <td class="observacao-coluna">{{ atendimento.DtAgen | date: 'dd-MM-yyyy HH:mm' }}</td>
-        <td>{{ getNomeProfissional(atendimento.CodProf) }}</td>
-        <td>{{ atendimento.VrServ | number: '1.2-2' }}</td>
-        <td>{{ atendimento.PercComis | number: '1.2-2' }}</td>
-        <td class="observacao-coluna">{{ atendimento.Obs }}</td> <!-- Classe para Observações -->
-        <td class="text-center">
-          <button
-            class="btn btn-warning btn-sm mr-2"
-            (click)="editAtendServ(atendimento.CodAtend, atendimento.CodServ)"
-          >
-            Editar
-          </button>
-          <button
-            class="btn btn-danger btn-sm"
-            (click)="deleteAtendServ(atendimento.CodAtend, atendimento.CodServ)"
-          >
-            Excluir
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- Lista de Atendimentos -->
+  <h3 class="text-center text-secondary mt-4 fw-bold border-bottom pb-2">Lista de Atendimentos</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover shadow-lg">
+      <thead class="table-dark">
+        <tr>
+          <th class="text-center">Código</th>
+          <th>Serviço</th>
+          <th>Data e Hora</th>
+          <th>Profissional</th>
+          <th>Valor (R$)</th>
+          <th>Comissão (%)</th>
+          <th>Observações</th>
+          <th class="text-center">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let atendimento of atendServs" class="align-middle">
+          <td class="text-center">{{ atendimento.CodAtend }}</td>
+          <td>{{ getServicoNome(atendimento.CodServ) }}</td>
+          <td>{{ atendimento.DtAgen | date: 'dd-MM-yyyy HH:mm' }}</td>
+          <td>{{ getNomeProfissional(atendimento.CodProf) }}</td>
+          <td>{{ atendimento.VrServ | number: '1.2-2' }}</td>
+          <td>{{ atendimento.PercComis | number: '1.2-2' }}</td>
+          <td>{{ atendimento.Obs }}</td>
+          <td class="text-center">
+            <button
+              class="btn btn-warning btn-sm shadow-sm me-2"
+              (click)="editAtendServ(atendimento.CodAtend, atendimento.CodServ)"
+            >
+              <i class="bi bi-pencil-square"></i> Editar
+            </button>
+            <button
+              class="btn btn-danger btn-sm shadow-sm"
+              (click)="deleteAtendServ(atendimento.CodAtend, atendimento.CodServ)"
+            >
+              <i class="bi bi-trash"></i> Excluir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

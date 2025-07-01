@@ -126,6 +126,16 @@ h2 {
   background-color: #c82333;
 }
 
+/* Estilo para botões circulares */
+.btn.rounded-circle {
+  transition: box-shadow 0.2s, background 0.2s;
+}
+
+.btn.rounded-circle:hover {
+  box-shadow: 0 4px 16px #19875433;
+  background: #e9fbe9;
+}
+
 /* Melhorias de responsividade */
 @media (max-width: 768px) {
   .container {
@@ -149,4 +159,134 @@ h2 {
   .btn {
     width: 100%; /* Botões ocupam toda a largura em dispositivos menores */
   }
+}
+
+/* Estilo do botão "Novo" */
+.btn-outline-success {
+  border-color: #28a745;
+  color: #28a745;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-outline-success:focus {
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+.btn-outline-success svg {
+  fill: #28a745;
+  margin-right: 5px;
+  transition: transform 0.2s;
+}
+
+.btn-outline-success:hover svg {
+  transform: translateX(3px);
+}
+
+.btn-outline-success:active {
+  transform: translateY(1px);
+}
+
+.btn-outline-success:hover, .btn-outline-success:focus {
+  background: #e9fbe9;
+  color: #198754;
+  box-shadow: 0 0 0 4px #b7f5c6a0, 0 4px 16px #19875433;
+  border-color: #198754;
+  outline: none;
+}
+
+/* Estilo para o botão com ícone "Novo" */
+.btn-success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-weight: 600;
+  min-width: 120px;
+  border-radius: 8px;
+  border: none;
+  color: #fff;
+  background: linear-gradient(90deg, #28a745 80%, #43e97b 100%);
+  transition: box-shadow 0.2s, background 0.2s, transform 0.15s;
+}
+
+.btn-success:hover {
+  background: linear-gradient(90deg, #43e97b 60%, #38f9d7 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px #43e97b55;
+  transform: translateY(-2px) scale(1.04);
+}
+
+.btn-success svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+  margin-right: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.btn-success:hover svg {
+  transform: translateX(3px);
+}
+
+.novo-cliente-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.18rem 0.5rem;
+  font-weight: 600;
+  min-width: 70px;
+  border-radius: 8px;
+  border: none;
+  color: #fff;
+  background: linear-gradient(90deg, #28a745 80%, #43e97b 100%);
+  box-shadow: 0 2px 8px #43e97b33;
+  transition: box-shadow 0.2s, background 0.2s, transform 0.15s;
+  font-size: 0.95rem;
+}
+
+.novo-cliente-btn svg {
+  width: 14px;
+  height: 14px;
+  margin-right: 0.15rem;
+}
+
+.novo-btn-text {
+  font-size: 0.98rem;
+  margin-left: 1px;
+}
+
+/* Estilo para tooltip do novo cliente */
+.tooltip-novo-cliente {
+  position: relative;
+}
+
+.tooltip-novo-cliente .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #222;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 0;
+  position: absolute;
+  z-index: 10;
+  bottom: 125%; /* Acima do botão */
+  left: 50%;
+  margin-left: -70px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+.tooltip-novo-cliente:hover .tooltiptext,
+.tooltip-novo-cliente:focus .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }

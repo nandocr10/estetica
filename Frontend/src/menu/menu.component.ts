@@ -41,6 +41,9 @@ export class MenuComponent {
       case 'profissional': // Adicionado para Profissional List
         this.router.navigate(['/profissionais']);
         break;
+      case 'agendamentos': // Adicionado para Agendamentos List
+        this.router.navigate(['/agendamentos']);
+        break;
       default:
         break;
     }
@@ -89,6 +92,9 @@ export class MenuComponent {
         break;
       case 'produtos': // Adicionado para Produtos 
         this.router.navigate(['/produtos']);
+        break;
+      case 'agendamentos': // Adicionado para Agendamentos
+        this.router.navigate(['/agendamentos']);
         break;
       default:
         break;

@@ -190,7 +190,7 @@ formatDateTime(date: Date): string {
 
   resetAtendimento(): AtendServ {
     return {
-      CodAtend: 0,
+      CodAtend: this.codAtend, // Mantém o código atual de atendimento
       CodServ: 0,
       CodProf: null,
       DtAgen: null,
@@ -208,27 +208,44 @@ formatDateTime(date: Date): string {
     };
   }
 
+  private isValidStep15(dateValue: string | Date): boolean {
+    if (!dateValue) return false;
+    const date = typeof dateValue === 'string' ? new Date(dateValue) : dateValue;
+    return date.getMinutes() % 15 === 0;
+  }
+
   onSubmit(atendimentoForm: NgForm): void {
-    this.atendimento.CodAtend =   this.codAtend;
+    // Validação do horário múltiplo de 15 minutos
+    if (!this.isValidStep15(this.atendimento.DtAgen)) {
+      this.errorMessage = 'O horário deve ser em intervalos de 15 minutos (ex: 08:00, 08:15, 08:30, 08:45).';
+      this.successMessage = '';
+      return;
+    }
+
+    this.atendimento.CodAtend = this.codAtend;
     if (this.isEditing) {
       this.updateAtendServ();
     } else {
-      this.createAtendServ();
+      this.createAtendServ(atendimentoForm);
     }
-    //atendimentoForm.resetForm();
-    //atendimentoForm.resetForm(); // Garante o reset do formulário
-    this.atendimento = this.resetAtendimento(); // Reset explícito do modelo
   }
 
-  createAtendServ(): void {
+  createAtendServ(atendimentoForm: NgForm): void {
     this.atendServService.create(this.atendimento).subscribe(
       (data) => {
         this.atendServs.push(data);
         this.successMessage = 'Atendimento de serviço criado com sucesso!';
         this.errorMessage = '';
         this.atendimento = this.resetAtendimento();
+        atendimentoForm.resetForm();
       },
-      (error) => this.handleError('Erro ao criar atendimento de serviço', this.errorMessage)
+      (error) => {
+        if (error.status === 409) {
+          this.errorMessage = error.error.message || 'Já existe um atendimento cadastrado para este profissional neste horário.';
+        } else {
+          this.handleError('Erro ao criar atendimento de serviço', error);
+        }
+      }
     );
   }
 

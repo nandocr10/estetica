@@ -154,45 +154,35 @@
       </button>
     </div>
   </form>
-</div>
 
-<!-- Tabela de clientes -->
-<div class="table-container mt-4">
-  <table class="table table-striped shadow-sm">
-    <thead class="table-primary">
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>CPF</th>
-        <th>Telefone</th>
-        <th>Email</th>
-        <th>Rede Social</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let c of filteredClientes">
-        <td>{{ c.Codcli }}</td>
-        <td>{{ c.NmCli }}</td>
-        <td>{{ c.CpfCli }}</td>
-        <td>{{ c.FoneCli }}</td>
-        <td>{{ c.EmailCli }}</td>
-        <td>{{ c.redesocial }}</td>
-        <td>
-          <button
-            (click)="editCliente(c.Codcli)"
-            class="btn btn-warning btn-sm shadow-sm"
-          >
-            Editar
-          </button>
-          <button
-            (click)="deleteCliente(c.Codcli)"
-            class="btn btn-danger btn-sm shadow-sm"
-          >
-            Excluir
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- Botão para exportar relatório -->
+  <div class="text-end mb-3">
+    <button class="btn btn-success shadow-sm" (click)="exportToExcel()">Exportar para Excel</button>
+  </div>
+
+  <!-- Tabela de clientes -->
+  <div class="table-container mt-4">
+    <table class="table table-striped shadow-sm">
+      <thead class="table-primary">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>Telefone</th>
+          <th>Email</th>
+          <th>Rede Social</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of paginatedClientes">
+          <td>{{ c.Codcli }}</td>
+          <td>{{ c.NmCli }}</td>
+          <td>{{ c.CpfCli }}</td>
+          <td>{{ c.FoneCli }}</td>
+          <td>{{ c.EmailCli }}</td>
+          <td>{{ c.redesocial }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

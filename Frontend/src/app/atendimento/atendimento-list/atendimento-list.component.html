@@ -4,14 +4,30 @@
   <form #atendimentoForm="ngForm" (ngSubmit)="onSubmit(atendimentoForm)" class="card shadow p-4 mb-5">
     <h4 class="text-secondary mb-3">Novo Atendimento</h4>
 
-    <div class="form-group">
-      <label for="Codcli" class="font-weight-bold">Cliente:</label>
+    <!-- Formulário existente -->
+    <div class="form-group d-flex align-items-center mb-3">
+      <label for="Codcli" class="font-weight-bold me-2">Cliente:</label>
       <select class="form-control" [(ngModel)]="atendimento.Codcli" name="Codcli" required>
         <option value="" disabled>Selecione um cliente</option>
         <option *ngFor="let cliente of clientes" [value]="cliente.Codcli">
           {{ cliente.NmCli }} ({{ cliente.Codcli }})
         </option>
       </select>
+      <button type="button"
+              class="btn novo-cliente-btn tooltip-novo-cliente"
+              (click)="novoCliente()">
+        <span class="novo-cliente-icone">
+          <!-- SVG de avatar com símbolo de "+" -->
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="12" r="7" fill="#fff" stroke="#28a745" stroke-width="2"/>
+            <rect x="6" y="22" width="20" height="8" rx="4" fill="#fff" stroke="#28a745" stroke-width="2"/>
+            <circle cx="24" cy="24" r="6" fill="#43e97b" stroke="#fff" stroke-width="2"/>
+            <path d="M24 21v6M21 24h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="novo-btn-text">Novo</span>
+        <span class="tooltiptext">Inserir novo Cliente</span>
+      </button>
     </div>
 
     <div class="form-group">
@@ -31,17 +47,6 @@
       ></textarea>
     </div>
 
-    <!-- 🔹 Novo Campo: Staatend -->
-    <div class="form-group">
-      <label for="Staatend" class="font-weight-bold">Status do Atendimento:</label>
-      <select class="form-control" [(ngModel)]="atendimento.Staatend" name="Staatend" required>
-        <option value="" disabled>Selecione um status</option>
-        <option value="1">Ativo</option>
-        <option value="2">Em Atendimento</option>
-        <option value="3">Encerrado</option>
-      </select>
-    </div>
-
     <button type="submit" class="btn btn-success btn-block mt-3" [disabled]="atendimentoForm.invalid">
       Criar Novo Atendimento
     </button>
@@ -50,6 +55,11 @@
       {{ successMessage }}
     </div>
   </form>
+
+  <!-- Botão para gerar relatório -->
+  <div class="text-end mt-3">
+    <button class="btn btn-success" (click)="exportAtendimentos()">Gerar Relatório</button>
+  </div>
 
   <!-- Campo de Pesquisa -->
   <div class="form-group mt-3">
@@ -73,7 +83,7 @@
           <th>Código do Cliente</th>
           <th>Data de Agendamento</th>
           <th>Observações</th>
-          <th>Status</th> <!-- Novo campo na tabela -->
+          <th>Status</th>
           <th class="text-center">Ações</th>
         </tr>
       </thead>
@@ -84,7 +94,7 @@
           <td>{{ atendimento.Codcli }}</td>
           <td>{{ atendimento.DtAgen | date: 'dd-MM-yyyy' }}</td>
           <td>{{ atendimento.Obs }}</td>
-          <td>{{ getStatusText(atendimento.Staatend) }}</td> <!-- Exibir texto do status -->
+          <td>{{ getStatusText(atendimento.Staatend) }}</td>
           <td class="text-center">
             <button class="btn btn-warning btn-sm mr-2" [routerLink]="['/atend-serv', atendimento.CodAtend, atendimento.Codcli]">
               Serviços
