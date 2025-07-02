@@ -2,6 +2,7 @@ const axios = require('axios');
 const wppconnect = require('@wppconnect-team/wppconnect');
 
 let clientInstance = null;
+let lastQrCode = null;
 
 // Inicializa o cliente WPPConnect (apenas uma vez)
 async function getClient() {
@@ -9,6 +10,7 @@ async function getClient() {
   clientInstance = await wppconnect.create({
     session: 'estetica-session',
     catchQR: (base64Qr, asciiQR) => {
+      lastQrCode = base64Qr; // Salva o QR Code em base64
       console.log('Escaneie este QR Code no WhatsApp:');
       console.log(asciiQR);
     },
@@ -47,4 +49,13 @@ async function sendWhatsAppMessage(phone, message) {
   }
 }
 
-module.exports = { sendWhatsAppMessage };
+// Nova função para retornar o QR Code
+function getLastQrCode(req, res) {
+  if (lastQrCode) {
+    res.json({ qr: lastQrCode });
+  } else {
+    res.status(404).json({ error: 'QR Code não disponível' });
+  }
+}
+
+module.exports = { sendWhatsAppMessage, getLastQrCode };

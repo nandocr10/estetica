@@ -1,4 +1,15 @@
 <div class="agenda-wrapper">
+
+  <!-- Miniatura do QR Code -->
+  <div *ngIf="qrCodeBase64" class="qrcode-mini-thumb">
+    <img [src]="qrCodeBase64.startsWith('data:image') ? qrCodeBase64 : 'data:image/png;base64,' + qrCodeBase64"
+         alt="QR Code WhatsApp"
+         title="Clique para ampliar"
+         (click)="abrirQrCodeGrande()"
+         style="width: 60px; height: 60px; cursor: pointer; border: 2px solid #4caf50; border-radius: 8px; box-shadow: 0 2px 6px #0002;" />
+    <div style="font-size: 0.8rem; text-align: center;">WhatsApp</div>
+  </div>
+
   <div class="agenda-header">
     <div class="agenda-logo-wrapper">
       <img src="assets/LOGOTIPO.png" alt="Logo Belle Clinic" class="agenda-logo" />
@@ -57,6 +68,18 @@
           <i class="fa fa-calendar-times"></i> Nenhum agendamento
         </div>
       </ng-template>
+    </div>
+  </div>
+
+  <!-- QR Code grande (modal ou caixa central) -->
+  <div *ngIf="qrCodeGrandeVisivel" class="qrcode-sync-modal" (click)="fecharQrCodeGrande()">
+    <div class="qrcode-sync-modal-content" (click)="$event.stopPropagation()">
+      <h3>Sincronize o WhatsApp</h3>
+      <p>Escaneie o QR Code abaixo com o WhatsApp para ativar o envio automático:</p>
+      <img [src]="qrCodeBase64.startsWith('data:image') ? qrCodeBase64 : 'data:image/png;base64,' + qrCodeBase64"
+           alt="QR Code WhatsApp"
+           style="max-width: 300px; border: 2px solid #ccc; border-radius: 8px;" />
+      <button (click)="fecharQrCodeGrande()" style="margin-top: 1rem;">Fechar</button>
     </div>
   </div>
 </div>

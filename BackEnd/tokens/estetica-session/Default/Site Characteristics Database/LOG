@@ -1,3 +1,2 @@
-2025/07/01-19:51:32.209 1b20 Reusing MANIFEST C:\Projeto\estetica\BackEnd\tokens\estetica-session\Default\Site Characteristics Database/MANIFEST-000001
-2025/07/01-19:51:32.210 1b20 Recovering log #3
-2025/07/01-19:51:32.210 1b20 Reusing old log C:\Projeto\estetica\BackEnd\tokens\estetica-session\Default\Site Characteristics Database/000003.log 
+2025/07/02-14:17:09.601 4778 Creating DB C:\Projeto\estetica\BackEnd\tokens\estetica-session\Default\Site Characteristics Database since it was missing.
+2025/07/02-14:17:09.628 4778 Reusing MANIFEST C:\Projeto\estetica\BackEnd\tokens\estetica-session\Default\Site Characteristics Database/MANIFEST-000001

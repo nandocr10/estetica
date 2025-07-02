@@ -14,6 +14,8 @@ export class AgendamentoListComponent implements OnInit, OnDestroy {
   currentWeekStart: Date = new Date();
   currentWeekEnd: Date = new Date();
   private timer: any;
+  qrCodeBase64: string | null = null;
+  qrCodeGrandeVisivel = false;
 
   constructor(
     private agendamentoService: AgendamentoService,
@@ -25,9 +27,7 @@ export class AgendamentoListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.calculateCurrentWeek();
     this.loadAgendamentos();
-    this.timer = setInterval(() => {
-      this.cdr.detectChanges();
-    }, 60000); // Atualiza a cada minuto
+    this.buscarQrCode();
   }
 
   ngOnDestroy(): void {
@@ -89,6 +89,20 @@ export class AgendamentoListComponent implements OnInit, OnDestroy {
     });
   }
 
+  buscarQrCode() {
+    this.http.get<{ qr: string }>('http://localhost:3000/whatsappRoute/qrcode')
+      .subscribe({
+        next: (data) => {
+          this.qrCodeBase64 = data.qr;
+          console.log('QR Code carregado:', this.qrCodeBase64); // Para depuração
+        },
+        error: () => {
+          this.qrCodeBase64 = null;
+          console.log('QR Code não disponível');
+        }
+      });
+  }
+
   navigateWeek(direction: string): void {
     const daysToAdd = direction === 'next' ? 7 : -7;
     this.currentWeekStart = new Date(this.currentWeekStart.setDate(this.currentWeekStart.getDate() + daysToAdd));
@@ -137,12 +151,38 @@ export class AgendamentoListComponent implements OnInit, OnDestroy {
   }
 
   enviarZap(appointment: any, event: Event) {
-    event.stopPropagation(); // Para não acionar o detalharServico
+    event.stopPropagation();
+
+    // Verifica se há QR Code pendente de sincronização
+    this.http.get<{ qr: string }>('http://localhost:3000/whatsappRoute/qrcode')
+      .subscribe({
+        next: (data) => {
+          if (data.qr) {
+            // Se existe QR Code, exibe na tela e não envia a mensagem
+            this.qrCodeBase64 = data.qr;
+            alert('É necessário sincronizar o WhatsApp antes de enviar mensagens. Escaneie o QR Code exibido.');
+          } else {
+            // Se não existe QR Code, pode enviar a mensagem normalmente
+            this.qrCodeBase64 = null;
+            this.enviarMensagemZap(appointment);
+          }
+        },
+        error: () => {
+          // Se der erro na requisição, tenta enviar normalmente
+          this.qrCodeBase64 = null;
+          this.enviarMensagemZap(appointment);
+        }
+      });
+  }
+
+  // Método separado para enviar a mensagem
+  enviarMensagemZap(appointment: any) {
     const phone = appointment.telefone;
     const message =
       `Olá ${appointment.cliente}, tudo bem?\n\n` +
       `Seu atendimento de *${appointment.servico}* está agendado para o dia ${appointment.data} às ${appointment.hora}.\n\n` +
-      `Por favor, responda *Sim* para confirmar ou *Não* para cancelar.\n\n` +
+      `Por favor, confirme sua presença respondendo:\n` +
+      `*Sim* para confirmar ou *Não* para cancelar.\n\n` +
       `Qualquer dúvida, estamos à disposição.\n` +
       `Será um prazer recebê-lo(a) em nossa clínica! 😘`;
 
@@ -150,5 +190,13 @@ export class AgendamentoListComponent implements OnInit, OnDestroy {
       next: () => alert('Mensagem enviada pelo WhatsApp!'),
       error: () => alert('Erro ao enviar WhatsApp.')
     });
+  }
+
+  abrirQrCodeGrande() {
+    this.qrCodeGrandeVisivel = true;
+  }
+
+  fecharQrCodeGrande() {
+    this.qrCodeGrandeVisivel = false;
   }
 }

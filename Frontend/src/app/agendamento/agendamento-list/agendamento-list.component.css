@@ -234,6 +234,40 @@ h1 {
   cursor: default;
 }
 
+.qrcode-sync-box {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.qrcode-mini-thumb {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: #fff;
+  padding: 6px 8px 2px 8px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #0001;
+  z-index: 10;
+  text-align: center;
+}
+
+.qrcode-sync-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.qrcode-sync-modal-content {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 24px #0003;
+}
+
 @keyframes fadeInHighlight {
   from { background: #fffbe7; }
   to   { background: linear-gradient(120deg, #fffbe7 80%, #ffe0e3 100%); }

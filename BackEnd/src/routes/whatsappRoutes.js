@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { sendWhatsAppMessage } = require('../controller/whatsappServices');
+const { sendWhatsAppMessage, getLastQrCode } = require('../controller/whatsappServices');
 
 router.post('/send-whatsapp', async (req, res) => {
   const { phone, message } = req.body;
@@ -11,5 +11,7 @@ router.post('/send-whatsapp', async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
+
+router.get('/qrcode', getLastQrCode);
 
 module.exports = router;
